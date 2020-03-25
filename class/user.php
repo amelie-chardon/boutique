@@ -175,7 +175,7 @@ public function profil($confmdp,$login = "",$mail= "",$mdp = ""){
     public function mes_achats(){
 
         $this->connect();
-        $fetch=$this->execute("SELECT achats.date_achat, achats.prix FROM achats RIGHT JOIN utilisateurs ON achats.id_utilisateurs = utilisateurs.id WHERE id = $this->id");
+        $fetch=$this->execute("SELECT achats.id, DATE_FORMAT(achats.date_achat, \"%d/%m/%Y\"), achats.prix FROM achats RIGHT JOIN utilisateurs ON achats.id_utilisateurs = utilisateurs.id WHERE utilisateurs.id = $this->id");
         //S'il n'y a pas d'achat
         if ($fetch[0][0]==null)
         {
@@ -184,22 +184,23 @@ public function profil($confmdp,$login = "",$mail= "",$mdp = ""){
         else
         {
         ?>
-            <table>
+            <table class="actions">
                 <tbody>
                     <tr>
                         <th>Date d'achat</th>
-                        <th>Montant du panier</th>  
+                        <th>Montant</th>
+                        <th></th>
                     </tr>
         <?php
-       foreach($fetch as list($date_achat,$prix))
+       foreach($fetch as list($id,$date_achat,$prix))
        {
         
             ?>
                     <tr>
                         <td><?php echo $date_achat; ?></td>
-                        <td><?php echo $prix; ?></td>
+                        <td><?php echo $prix; ?>€</td>
+                        <td><form class="formulaire" method="post" action="" id="comment"><button type="submit" id="submit" name="achats_<?php echo $id; ?>">Laisser un avis</button></form></td>
                     </tr>
-
        <?php
        }
        ?>

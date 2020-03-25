@@ -10,7 +10,7 @@ html
 body
 {
     margin:0;
-    padding:0;
+    padding: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -27,7 +27,7 @@ main
     align-content: center;
     flex-direction: column;
     min-height: 80vh;
-    width:95vw;
+    width:90vw;
     margin:10px;
 }
 
@@ -36,29 +36,23 @@ h1
     display: flex;
     font-size: 40px;
     justify-content: center;
-    text-transform: uppercase;}
+    text-transform: uppercase;
+}
 
 h2
 {
-    text-transform: uppercase;}
-
-button a
-{
-    text-decoration: none;
-}
-
-button
-{
-    font-size: 20px;
+    text-transform: uppercase;
 }
 
 a{
     color:black;
     text-decoration: none;
 }
-form{
 
+form
+{
     text-align: center;
+    margin:0;
 }
 
 
@@ -67,8 +61,7 @@ form{
 header
 {
     display: flex;
-    width: 100vw;
-    height: 40vh;
+    width:100vw;
     flex-direction: column;
     align-items: center;
     align-content: center;
@@ -82,6 +75,16 @@ header nav
     display: flex;
     height:8vh;
     align-items: center;
+}
+
+header #menu2
+{
+    background-color: white;
+    width:100vw;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    align-content: center;
 }
 
 header ul
@@ -108,9 +111,17 @@ header li a:hover
     color: peachpuff;
 }
 
+#banner
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 #logo-top{
     max-width:150px;
     max-height:150px;
+    margin: auto;
 }
 
 
@@ -162,6 +173,39 @@ footer li a:hover
     color: peachpuff;
 }
 
+/*INDEX*/
+
+
+.panneau-jaune
+{
+    margin:15px;
+    display:flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+    min-height: 45vh;
+    background-color: rgb(248, 230, 186) ;
+    margin-bottom:5vh;
+}
+
+.panneau-rose
+{
+    margin:15px;
+    display:flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+    min-height: 45vh;
+    background-color: rgb(235, 157, 157) ;
+    margin-bottom:5vh;
+}
+
 /*INSCRIPTION/CONNEXION*/
 
 .formulaire
@@ -202,91 +246,6 @@ footer li a:hover
     text-shadow: 4px 4px 12px rgba(253, 255, 147, 0.795);
 }
 
-/*FORUM-INDEX*/
-
-.forum
-{
-    margin:15px;
-    min-height: 45vh;
-}
-
-.topic
-{
-    background-color: rgba(18, 122, 241, 0.349);
-    margin:10px;
-    padding:5px;
-    border-radius: 20px;
-    
-}
-
-.description
-{
-    color:black;
-}
-
-.titre a
-{
-    color:#000C47;
-    font-weight: bold;
-    font-size: larger;
-}
-
-.titre a:hover
-{
-    color:grey;
-}
-
-.form-creer
-{
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    justify-items: center;
-    align-content: center;
-    align-items: center;
-    text-align: center;
-    max-width:30vw;
-    margin:auto;
-    margin-top:20px;
-    margin-bottom: 20px;
-    padding:15px;
-    background-color: rgba(253, 200, 71, 0.3);
-    border-radius: 20px;
-}
-
-.form-creer label
-{
-    display: flex;
-    flex-direction:column;
-    justify-content: center;
-    justify-items: center;
-    align-content: center;
-    align-items: center;
-    text-align: center;
-    min-width: 15vw;
-    max-width: 25vw;
-    font-size: 15px;
-}
-
-.form-creer input,textarea,select,option
-{
-    display: flex;
-    flex-direction:column;
-    justify-content: center;
-    justify-items: center;
-    align-content: center;
-    align-items: center;
-    text-align: center;
-    font-size: 15px;
-    max-width: 25vw;
-    min-width: 15vw;
-    color: rgb(22, 22, 22);
-    margin:auto;
-}
-
-
-
-
 
 /*PROFIL / ADMIN */
 
@@ -322,14 +281,23 @@ footer li a:hover
 
 table {
     border-collapse: collapse;
+    vertical-align: center;
   }
   
-  table, th, td {
+  th, td {
     border: 1px solid black;
   }
 
   th, td {
     padding: 15px;
-    text-align: left;
+    text-align: center;
   }
 
+ .actions th:last-child, .actions td:last-child {
+    border: none;
+  }
+
+  .actions form
+  {
+      margin:auto;
+  }

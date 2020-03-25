@@ -50,7 +50,6 @@ if($_SESSION['user']->isConnected() != true){
                     <input type="password" name="password" minlength="5" /><br>
                     <label>Confirmation du mot de passe :</label>
                     <input type="password" name="passwordconf" required><br>
-                    
                     <input type="submit" name="send">
                     </form>
 
@@ -92,7 +91,7 @@ if($_SESSION['user']->isConnected() != true){
     <section class="bloc">
         <h2>Me désinscrire</h2> 
         <form class="formulaire" method="post">
-        <input type="submit" name="desinscription" id="submit" value="delete">
+            <button type="submit" name="desinscription">Se désinscrire</button>
         </form>
 
         <?php 

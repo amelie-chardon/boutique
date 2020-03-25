@@ -31,6 +31,15 @@ if(!isset($_SESSION['user'])){
 
 <main>
 
+<section class="panneau-jaune">
+    <h2>Les nouveautés</h2>
+</section>
+<section class="panneau-rose">
+    <h2>La sélection du mois</h2>
+</section>
+<section class="panneau-jaune">
+    <h2>Les coups de coeur de nos clients</h2>
+</section>
 
 
 
