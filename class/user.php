@@ -189,6 +189,7 @@ public function profil($confmdp,$login = "",$mail= "",$mdp = ""){
                     <tr>
                         <th>Date d'achat</th>
                         <th>Montant</th>
+                        <th>Panier</th>
                         <th></th>
                     </tr>
         <?php
@@ -199,7 +200,8 @@ public function profil($confmdp,$login = "",$mail= "",$mdp = ""){
                     <tr>
                         <td><?php echo $date_achat; ?></td>
                         <td><?php echo $prix; ?>€</td>
-                        <td><form class="formulaire" method="post" action="" id="comment"><button type="submit" id="submit" name="achats_<?php echo $id; ?>">Laisser un avis</button></form></td>
+                        <td><form class="formulaire" method="get" action="voir-commande.php" id="panier"><button type="submit" id="submit" name="id_achats" value="<?php echo $id; ?>">Voir ma commande</button></form></td>
+                        <td><form class="formulaire" method="get" action="" id="comment"><button type="submit" id="submit" name="achats" value="<?php echo $id; ?>">Laisser un avis</button></form></td>
                     </tr>
        <?php
        }
@@ -210,6 +212,40 @@ public function profil($confmdp,$login = "",$mail= "",$mdp = ""){
         }
     }
 
+    public function mon_panier_achats(){
+        $id_achats=$_GET["id_achats"];
+
+        $this->connect();
+        $fetch=$this->execute("SELECT produits.id,produits.nom, panier.quantite,produits.prix, produits.image, achats.prix FROM panier RIGHT JOIN produits ON panier.id_produits=produits.id RIGHT JOIN achats ON achats.id_panier=panier.id_achats WHERE id_achats=$id_achats");
+
+        ?>
+            <table class="actions">
+                <tbody>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prix à l'unité</th>
+                        <th>Quantité</th>
+                        <th>Total</th>
+                        <th></th>
+                    </tr>
+        <?php
+       foreach($fetch as list($id_produit,$nom,$quantite,$prix_u,$image,$prix_total))
+       {
+            ?>
+                    <tr>
+                        <td><?php echo $nom; ?></td>
+                        <td><?php echo $prix_u; ?>€</td>
+                        <td><?php echo $quantite ?></td>
+                        <td><?php echo $prix_u*$quantite; ?>€</td>
+                        <td><form class="formulaire" method="get" action="" id="comment"><button type="submit" id="submit" name="id_produit" value="<?php echo $id_produit ; ?>">Laisser un avis</button></form></td>
+                    </tr>
+            <?php
+       }
+            ?>
+                </tbody> 
+            </table>
+    <?php
+    }
 
 
 //Fonctions GET

@@ -42,9 +42,9 @@ if($_SESSION['user']->isConnected() != false){
             <label>Mail :</label>
             <input type="mail" name="mail" required><br>
             <label>Mot de passe :</label>
-            <input type="password" name="password" minlength="12" required><br>
+            <input type="password" name="password" minlength="5" required><br>
             <label>Confirmation du mot de passe :</label>
-            <input type="password" name="passwordconf" minlength="12" required><br>
+            <input type="password" name="passwordconf" minlength="5" required><br>
             <input type="submit" name="send">
         </form>
 
