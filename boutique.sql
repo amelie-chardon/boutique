@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mer. 25 mars 2020 à 07:10
+-- Généré le :  jeu. 26 mars 2020 à 16:01
 -- Version du serveur :  5.7.26
 -- Version de PHP :  7.2.18
 
@@ -67,7 +67,16 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `categories`
+--
+
+INSERT INTO `categories` (`id`, `nom`) VALUES
+(1, 'mariage'),
+(2, 'anniversaire'),
+(3, 'autre');
 
 -- --------------------------------------------------------
 
@@ -128,7 +137,22 @@ CREATE TABLE IF NOT EXISTS `sous_categories` (
   `nom` varchar(255) NOT NULL,
   `id_categories` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `sous_categories`
+--
+
+INSERT INTO `sous_categories` (`id`, `nom`, `id_categories`) VALUES
+(1, 'chocolat', 1),
+(2, 'fruit', 1),
+(3, 'les-deux', 1),
+(4, 'chocolat', 2),
+(5, 'fruit', 2),
+(6, 'les-deux', 2),
+(7, 'chocolat', 3),
+(8, 'fruit', 3),
+(9, 'les-deux', 3);
 
 -- --------------------------------------------------------
 
@@ -157,7 +181,16 @@ CREATE TABLE IF NOT EXISTS `utilisateurs` (
   `mail` varchar(40) NOT NULL,
   `role` varchar(30) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `utilisateurs`
+--
+
+INSERT INTO `utilisateurs` (`id`, `login`, `mdp`, `mail`, `role`) VALUES
+(1, 'nana', '$2y$05$TnqzaQt38Xz6fscyPu9wfO/4G/WfBC5PosxbR9MHqpfC2YQMdEIF2', 'nana@gmail.com', 'admin'),
+(2, 'azerty', '$2y$05$7EB1gsYT/qFpu0lkBORP1OxhOVGPhmZi2f415q0i13DrPzC3P6Qv6', 'azerty@sfr.fr', 'admin'),
+(3, 'toto', '$2y$05$wAq6m4ExwusS6lSUSALh8ucU5VFtsva7F1ah2v8a9omQUEBf.vT7m', 'toto@orange.fr', 'membre');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
