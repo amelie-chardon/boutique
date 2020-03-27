@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  jeu. 26 mars 2020 à 07:21
+-- Généré le :  ven. 27 mars 2020 à 16:09
 -- Version du serveur :  10.4.10-MariaDB
 -- Version de PHP :  7.3.12
 
@@ -39,6 +39,22 @@ CREATE TABLE IF NOT EXISTS `achats` (
   `date_achat` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `avis`
+--
+
+DROP TABLE IF EXISTS `avis`;
+CREATE TABLE IF NOT EXISTS `avis` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_produits` int(11) NOT NULL,
+  `id_utilisateurs` int(11) NOT NULL,
+  `note` int(11) NOT NULL,
+  `commentaire` varchar(255) CHARACTER SET utf8 NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -120,10 +136,19 @@ CREATE TABLE IF NOT EXISTS `produits` (
   `description` text NOT NULL,
   `prix` int(11) NOT NULL,
   `stock` int(11) NOT NULL,
-  `image` varchar(255) NOT NULL,
-  `note` int(11) NOT NULL,
+  `image` varchar(255) NOT NULL DEFAULT 'img/logo.png',
+  `note` int(11) NOT NULL DEFAULT 5,
+  `categorie` varchar(255) NOT NULL,
+  `sous_cat` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `produits`
+--
+
+INSERT INTO `produits` (`id`, `nom`, `description`, `prix`, `stock`, `image`, `note`, `categorie`, `sous_cat`) VALUES
+(3, 'pouik', 'pouik', 1, 1, 'img/logo.png', 5, 'mariage', 'Chocolat');
 
 -- --------------------------------------------------------
 
@@ -203,14 +228,16 @@ CREATE TABLE IF NOT EXISTS `utilisateurs` (
   `mail` varchar(40) NOT NULL,
   `role` varchar(30) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `utilisateurs`
 --
 
 INSERT INTO `utilisateurs` (`id`, `login`, `mdp`, `mail`, `role`) VALUES
-(1, 'nana', '$2y$05$TnqzaQt38Xz6fscyPu9wfO/4G/WfBC5PosxbR9MHqpfC2YQMdEIF2', 'nana@gmail.com', 'admin');
+(1, 'nana', '$2y$05$TnqzaQt38Xz6fscyPu9wfO/4G/WfBC5PosxbR9MHqpfC2YQMdEIF2', 'nana@gmail.com', 'admin'),
+(2, 'azerty', '$2y$05$7EB1gsYT/qFpu0lkBORP1OxhOVGPhmZi2f415q0i13DrPzC3P6Qv6', 'azerty@sfr.fr', 'admin'),
+(3, 'toto', '$2y$05$wAq6m4ExwusS6lSUSALh8ucU5VFtsva7F1ah2v8a9omQUEBf.vT7m', 'toto@orange.fr', 'membre');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
