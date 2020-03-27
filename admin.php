@@ -99,6 +99,119 @@ if(!isset($_SESSION['perm'])){
                     $requete = "INSERT INTO `produits` (`nom`, `description`, `prix`, `stock`, `categorie`, `sous_cat`) VALUES 
                     ('$nom', '$description', '$prix', '$stock','$categorie','$sous_categorie')";
                     $query = mysqli_query($connect,$requete);
+                    
+                   echo "Article bien ajouté !";
+                   header('Location:index.php');
+                    }
+             
+     else
+     {
+        
+        echo "empty";
+     }
+         
+        }
+        
+       
+?>
+                    </form>
+                </article>
+
+
+
+
+
+
+                        <article>
+
+                        <h2>Produit en Vente</h2>
+            <?php
+             
+             
+
+
+        $i = 0;
+        $connect = mysqli_connect("localhost", "root", "", "boutique");
+        $select = "SELECT * from produits";
+        $query = mysqli_query($connect,$select);
+        $result = mysqli_fetch_all($query);
+        
+        
+        ?>
+        <table>
+                <tbody>
+                    <tr>
+                        <th>Img</th>
+                        <th>Nom</th>
+                        <th>Description</th>
+                        <th>Prix</th>
+                        <th>Stock</th>
+                        <th>Note</th>
+                        <th>Catégorie</th>
+                        <th>Sous Catégorie(s)</th>
+                    </tr>
+        <?php
+       foreach($result as $data)
+       {
+        
+            ?>
+                    <tr>
+                       <td><?php echo $data[5] ?></td>
+                       <td><?php echo $data[1]; ?></td> 
+                       <td><?php echo $data[2] ?></td>
+                       <td><?php echo $data[3] ?></td>
+                       <td><?php echo $data[4] ?></td>
+                       <td><?php echo $data[6] ?></td>
+                       <td><?php echo $data[7] ?></td>
+                       <td><?php echo $data[8] ?></td>
+                       
+                    </tr>
+       <?php
+       }
+       $i++
+       ?>
+                </tbody> 
+            </table>
+        
+        
+               <!-- <form action="admin.php" method="POST">
+                    <label>Nom : </label>
+                    <input type="text" name="nom"/><br>
+                    <label>Description :</label>
+                    <input type="text" name="description"/><br>
+                    <label>Stock : </label>
+                    <input type="text" name="stock" required/><br>
+                    <label>Catégorie(s) : </label>
+                    <select name="categorie" required>
+                <option value="mariage" name="mariage">Mariage</option>
+                <option value="anniv" name="anniv">Anniversaire</option>
+                <option value="autre" name="autre">Autre</option>
+                    </select></br>
+                    <label>Sous-Catégorie(s) : </label>
+                    <select name="sous_categorie" required>
+                <option value="Chocolat" name="ch">Chocolat</option>
+                <option value="Fruit" name="fr">Fruit</option>
+                <option value="Les_deux" name="les_2">Les deux</option>
+                    </select></br>  -->
+                   
+                   
+                  <!--  <input type="submit" name="send_moderation_produit"/>
+                    
+                    if(isset($_POST['send_moderation_produit'])){
+        $nom= $_POST['nom'];
+        $description=$_POST['description'];
+        $stock=$_POST['stock'];
+        $prix=$_POST['prix'];
+        $categorie=$_POST['categorie'];
+        $sous_categorie=$_POST['sous_categorie'];
+
+
+    if($nom != NULL && $description  != NULL && $stock != NULL &&
+     $prix != NULL && $categorie != NULL && $sous_categorie != NULL)
+    {
+                    $connect = mysqli_connect("localhost", "root", "", "boutique");
+                    $select = "SELECT * from produits";
+                    $query = mysqli_query($connect,$requete);
                     var_dump($requete);
                     
                    echo "Article bien ajouté !";
@@ -111,47 +224,13 @@ if(!isset($_SESSION['perm'])){
      }
          
         }
-        
-       
-       
-
-   
-
-
-?>
-</form>
-</article>
-                        <article>
-
-                        <h2>Modération de produit</h2>
-    
-                <form action="admin.php" method="POST">
-                    <label>Nom : </label>
-                    <input type="text" name="nom"/><br>
-                    <label>Description :</label>
-                    <input type="text" name="description"/><br>
-                    <label>Stock : </label>
-                    <input type="password" name="password" required/><br>
-                    <label>Catégorie(s):</label>
-                    <select name="select_cat" required>
-                <optgroup label="Mariage" value="mariage">
-                    <option value="choco" name="choco">Chocolat</option>
-                    <option value="fruit" name="fruit">Fruit</option>
-                    <option value="les_deux" name="les_deux">Les deux</option><br>
-                </optgroup>
-                <optgroup label="Anniversaire" value="anniv">
-                    <option value="choco" name="choco">Chocolat</option>
-                    <option value="fruit" name="fruit">Fruit</option>
-                    <option value="les_deux" name="les_deux">Les deux</option><br>
-                </optgroup>
-                <optgroup label="Autre" value="autre">
-                    <option value="choco" name="choco">Chocolat</option>
-                    <option value="fruit" name="fruit">Fruit</option>
-                    <option value="les_deux" name="les_deux">Les deux</option><br>
-                </optgroup>
-                    <input type="submit" name="send"/>
-                    </form>
-
+    -->
+                
+                
+                
+                
+                
+                    
                         </article>
                     </div>
 
