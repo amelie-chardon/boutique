@@ -9,7 +9,7 @@ if (isset($_SESSION['login']))
 <nav>
     <ul>
         <li><a href="index.php">Accueil</a></li>
-        <li><a href="profil.php">Mon profil</a></li>
+        <li><a href="profil.php">Mon compte</a></li>
         
         <?php 
         if(isset($_SESSION['perm'])){

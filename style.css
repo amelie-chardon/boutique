@@ -55,6 +55,11 @@ form
     margin:0;
 }
 
+button
+{
+    margin:5px;
+}
+
 
 /*HEADER*/
 
@@ -228,7 +233,7 @@ footer li a:hover
     align-content:center;
     justify-items:center;
     max-width: 20vw;
-    font-size: 15px;
+    font-size: 20px;
     text-shadow: 4px 4px 12px rgba(253, 255, 147, 0.795);
 }
 
@@ -239,9 +244,8 @@ footer li a:hover
     align-items:center;
     align-content:center;
     justify-items:center;
-    font-size: 15px;
+    font-size: 20px;
     max-width: 20vw;
-
     color: rgb(22, 22, 22);
     text-shadow: 4px 4px 12px rgba(253, 255, 147, 0.795);
 }
@@ -279,21 +283,32 @@ footer li a:hover
 
 /*TABLEAUX*/
 
-table {
+table 
+{
     border-collapse: collapse;
     vertical-align: center;
-  }
+    margin:15px;
+}
+
+th
+{
+    font-size: x-large;
+    padding:10px;
+}
+
   
-  th, td {
-    border: 1px solid black;
-  }
+th, td 
+{
+    /*border: 1px solid black;*/
+}
 
-  th, td {
-    padding: 15px;
+td {
+    padding: 5px;
     text-align: center;
-  }
+}
 
- .actions th:last-child, .actions td:last-child {
+ .actions th:last-child, .actions td:last-child
+ {
     border: none;
   }
 
@@ -301,3 +316,36 @@ table {
   {
       margin:auto;
   }
+
+  .actions tr:last-child
+  {
+    border: none;
+  }
+
+  .prix_tot
+  {
+      font-weight: bold;
+      font-size: x-large;
+  }
+
+  /*AVIS*/
+
+.note_echelle 
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin:5px;
+}
+
+.note_echelle input[type="radio"]
+{
+    margin-right:15px;
+}
+
+input[type="textarea"]
+{
+    height:100px;
+    width: max-content;
+}

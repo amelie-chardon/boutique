@@ -185,13 +185,15 @@ public function profil($confmdp,$login = "",$mail= "",$mdp = ""){
         {
         ?>
             <table class="actions">
-                <tbody>
+                <thead>
                     <tr>
                         <th>Date d'achat</th>
                         <th>Montant</th>
                         <th>Panier</th>
                         <th></th>
                     </tr>
+                </thead>
+                <tbody>
         <?php
        foreach($fetch as list($id,$date_achat,$prix))
        {
@@ -201,7 +203,6 @@ public function profil($confmdp,$login = "",$mail= "",$mdp = ""){
                         <td><?php echo $date_achat; ?></td>
                         <td><?php echo $prix; ?>€</td>
                         <td><form class="formulaire" method="get" action="voir-commande.php" id="panier"><button type="submit" id="submit" name="id_achats" value="<?php echo $id; ?>">Voir ma commande</button></form></td>
-                        <td><form class="formulaire" method="get" action="" id="comment"><button type="submit" id="submit" name="achats" value="<?php echo $id; ?>">Laisser un avis</button></form></td>
                     </tr>
        <?php
        }
@@ -220,7 +221,7 @@ public function profil($confmdp,$login = "",$mail= "",$mdp = ""){
 
         ?>
             <table class="actions">
-                <tbody>
+                <thead>
                     <tr>
                         <th>Nom</th>
                         <th>Prix à l'unité</th>
@@ -228,6 +229,8 @@ public function profil($confmdp,$login = "",$mail= "",$mdp = ""){
                         <th>Total</th>
                         <th></th>
                     </tr>
+                </thead>
+                <tbody>
         <?php
        foreach($fetch as list($id_produit,$nom,$quantite,$prix_u,$image,$prix_total))
        {
@@ -237,16 +240,45 @@ public function profil($confmdp,$login = "",$mail= "",$mdp = ""){
                         <td><?php echo $prix_u; ?>€</td>
                         <td><?php echo $quantite ?></td>
                         <td><?php echo $prix_u*$quantite; ?>€</td>
-                        <td><form class="formulaire" method="get" action="" id="comment"><button type="submit" id="submit" name="id_produit" value="<?php echo $id_produit ; ?>">Laisser un avis</button></form></td>
+                        <td><form class="formulaire" method="get" action="laisser-avis" id="comment"><button type="submit" id="submit" name="id_produits" value="<?php echo $id_produit ; ?>">Laisser un avis</button></form></td>
                     </tr>
             <?php
        }
             ?>
+                    <tr>
+                        <td class="prix_tot" colspan="3">Montant total :</td>
+                        <td class="prix_tot"><?php echo $fetch[0][5]; ?>€</td>
+                        <td></td>
+                    </tr>
                 </tbody> 
             </table>
     <?php
     }
 
+    public function avis_produits($commentaire,$note){
+        $id_produits=$_GET["id_produits"];
+        $id_utilisateurs=$this->id;
+        if($commentaire!=NULL && $note!=NULL)
+        {
+            $this->connect();
+            $requete=$this->execute("INSERT INTO avis (id_produits, id_utilisateurs, note, commentaire) VALUES (\"$id_produits\",\"$id_utilisateurs\",\"$note\",\"$commentaire\")");
+            if($requete==true)
+            {
+                return "ok";
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else 
+        {
+            return "empty";
+        }
+        ?>
+
+        <?php
+    }
 
 //Fonctions GET
 
