@@ -51,6 +51,7 @@ if(!isset($_SESSION['perm'])){
                         <h2>Ajout de produit</h2>
     
                 <form action="admin.php" method="POST">
+              
                     <label>Nom : </label>
                     <input type="text" name="nom"/><br>
                     <label>Description :</label>
@@ -65,9 +66,9 @@ if(!isset($_SESSION['perm'])){
                     
                     <label>Catégorie(s) : </label>
                     <select name="categorie" required>
-                <option value="mariage" name="mariage">Mariage</option>
-                <option value="anniv" name="anniv">Anniversaire</option>
-                <option value="autre" name="autre">Autre</option>
+                <option value="Mariage" name="Mariage">Mariage</option>
+                <option value="Anniv" name="Anniv">Anniversaire</option>
+                <option value="Autre" name="Autre">Autre</option>
                     </select></br>
                     <label>Sous-Catégorie(s) : </label>
                     <select name="sous_categorie" required>
@@ -82,11 +83,11 @@ if(!isset($_SESSION['perm'])){
 
                         
                        <?php if(isset($_POST['send_add_produit'])){
+        
         $nom= $_POST['nom'];
         $description=$_POST['description'];
         $stock=$_POST['stock'];
         $prix=$_POST['prix'];
-        
         $categorie=$_POST['categorie'];
         $sous_categorie=$_POST['sous_categorie'];
 
@@ -127,14 +128,13 @@ if(!isset($_SESSION['perm'])){
                         <h2>Produit en Vente</h2>
             <?php
              
-             
-
 
         $i = 0;
         $connect = mysqli_connect("localhost", "root", "", "boutique");
         $select = "SELECT * from produits";
         $query = mysqli_query($connect,$select);
         $result = mysqli_fetch_all($query);
+        
         
         
         ?>
@@ -157,82 +157,26 @@ if(!isset($_SESSION['perm'])){
             ?>
                     <tr>
                        <td><?php echo $data[5] ?></td>
-                       <td><?php echo $data[1]; ?></td> 
+                       <td><?php echo $data[1] ?></td> 
                        <td><?php echo $data[2] ?></td>
                        <td><?php echo $data[3] ?></td>
                        <td><?php echo $data[4] ?></td>
                        <td><?php echo $data[6] ?></td>
                        <td><?php echo $data[7] ?></td>
                        <td><?php echo $data[8] ?></td>
-                       
+                       <td><button><a href="modify_product?id=<?php echo $data[0]; ?>">Modifier</a></button></td>
+                       <td><button><a href="confirm_delete?id=<?php echo $data[0]; ?>">Delete</a></button></td>
                     </tr>
        <?php
        }
        $i++
+       
        ?>
                 </tbody> 
             </table>
-        
-        
-               <!-- <form action="admin.php" method="POST">
-                    <label>Nom : </label>
-                    <input type="text" name="nom"/><br>
-                    <label>Description :</label>
-                    <input type="text" name="description"/><br>
-                    <label>Stock : </label>
-                    <input type="text" name="stock" required/><br>
-                    <label>Catégorie(s) : </label>
-                    <select name="categorie" required>
-                <option value="mariage" name="mariage">Mariage</option>
-                <option value="anniv" name="anniv">Anniversaire</option>
-                <option value="autre" name="autre">Autre</option>
-                    </select></br>
-                    <label>Sous-Catégorie(s) : </label>
-                    <select name="sous_categorie" required>
-                <option value="Chocolat" name="ch">Chocolat</option>
-                <option value="Fruit" name="fr">Fruit</option>
-                <option value="Les_deux" name="les_2">Les deux</option>
-                    </select></br>  -->
-                   
-                   
-                  <!--  <input type="submit" name="send_moderation_produit"/>
-                    
-                    if(isset($_POST['send_moderation_produit'])){
-        $nom= $_POST['nom'];
-        $description=$_POST['description'];
-        $stock=$_POST['stock'];
-        $prix=$_POST['prix'];
-        $categorie=$_POST['categorie'];
-        $sous_categorie=$_POST['sous_categorie'];
-
-
-    if($nom != NULL && $description  != NULL && $stock != NULL &&
-     $prix != NULL && $categorie != NULL && $sous_categorie != NULL)
-    {
-                    $connect = mysqli_connect("localhost", "root", "", "boutique");
-                    $select = "SELECT * from produits";
-                    $query = mysqli_query($connect,$requete);
-                    var_dump($requete);
-                    
-                   echo "Article bien ajouté !";
-                    }
-             
-     else
-     {
-        
-        echo "empty";
-     }
-         
-        }
-    -->
-                
-                
-                
-                
-                
-                    
+    
                         </article>
-                    </div>
+                      </div>
 
 
                     <div class="gestion_cat">
@@ -244,27 +188,83 @@ if(!isset($_SESSION['perm'])){
                         <label>Nom : </label>
                         <input type="text" name="nom"/><br>
                   
-                        <input type="submit" name="send"/>
-                        </form>
+                        <input type="submit" name="send_add_cat"/>
+
+                        <?php if(isset($_POST['send_add_cat'])){
+        
+        $nom= $_POST['nom'];
+        
+    if($nom != NULL)
+    {
+         
+                    $connect = mysqli_connect("localhost", "root", "", "boutique");
+                    $requete = "INSERT INTO `categories` (`nom`) VALUES 
+                    ('$nom')";
+                    $query = mysqli_query($connect,$requete);
+                    
+                   echo "Catégorie bien ajoutée !";
+                   //s'ajoute en deux fois , si ajout header location, bug , car deja use plus haut...//
+                    }
+             
+     else
+     {
+        
+        echo "empty";
+     }
+         
+        }
+        
+       
+?>
+                    </form>
 
                         </article>
 
 
-                        <article>
+                      <h2>Catégorie(s) Disponible </h2>
 
-                        <h2>Modération de categories</h2>
+                      <?php
+             
+             
 
-                        <form action="admin.php" method="POST">
-                        <label>Nom : </label>
-                        <input type="text" name="nom"/><br>
-                  
-                        <input type="submit" name="send"/>
-                        </form>
 
-                        </article>
-                    </div>
+             $i = 0;
+             $connect = mysqli_connect("localhost", "root", "", "boutique");
+             $select = "SELECT * from categories";
+             $query = mysqli_query($connect,$select);
+             $result = mysqli_fetch_all($query);
+             
+             
+             ?>
+             <table>
+                     <tbody>
+                         <tr>
+                             <th>Nom</th>
+                            <!-- <th>Articles dependants</th> -->
+                         </tr>
+             <?php
+            foreach($result as $data)
+            {
+             
+                 ?>
+                         <tr>
+                            <td><?php echo $data[1] ?></td> 
+                            <td><button><a href="modify_cat?id=<?php echo $data[0]; ?>">Modifier</a></button></td>
+                            <td><button><a href="confirm_delete_cat?id=<?php echo $data[0]; ?>">Delete</a></button></td>
+                         </tr>
+            <?php
+            }
+            $i++
+            
+            ?>
+                     </tbody> 
+                 </table>
+         
+                             </article>
+                           </div>
 
-                    <div class="gestion_sous_cat">
+
+                 <!--   <div class="gestion_sous_cat">
                         <article>
 
                         <h2>Création de sous-categories</h2>
@@ -273,29 +273,40 @@ if(!isset($_SESSION['perm'])){
                         <label>Nom : </label>
                         <input type="text" name="nom"/><br>
                   
-                        <input type="submit" name="send"/>
-                        </form>
-
-                        </article>
-
-
-                        <article>
-
-                        <h2>Modération de sous-categories</h2>
-
-                        <form action="admin.php" method="POST">
-                        <label>Nom : </label>
-                        <input type="text" name="nom"/><br>
-
-
-                        <input type="submit" name="send"/>
-                        </form>
-
-                        </article>
-                    </div>
-
+                        <input type="submit" name="add_sous_cat"/>
+                        <?php /*if(isset($_POST['add_sous_cat'])){
+        
+        $nom= $_POST['nom'];
+        
+    if($nom != NULL)
+    {
+         
+                    $connect = mysqli_connect("localhost", "root", "", "boutique");
+                    $requete = "INSERT INTO `sous_categories` (`nom`) 
+                                VALUES ('$nom')"; 
+                                
+                    $query = mysqli_query($connect,$requete);
+                    var_dump($query);
                     
+                   echo "Sous-Catégorie bien ajoutée !";
+                   //s'ajoute en deux fois , si ajout header location, bug , car deja use plus haut...//
+                    }
+             
+     else
+     {
+        
+        echo "empty";
+     }
+         
+        }
+  */      
+       
+?>
+                 </form>
 
+                        </article>
+                    
+ -->  
                     </section>
 
                 <?php require 'include/footer.php'?>

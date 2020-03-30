@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  ven. 27 mars 2020 à 16:09
+-- Généré le :  lun. 30 mars 2020 à 07:43
 -- Version du serveur :  10.4.10-MariaDB
 -- Version de PHP :  7.3.12
 
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `categories`
@@ -76,7 +76,8 @@ CREATE TABLE IF NOT EXISTS `categories` (
 INSERT INTO `categories` (`id`, `nom`) VALUES
 (1, 'mariage'),
 (2, 'anniversaire'),
-(3, 'autre');
+(3, 'autre'),
+(6, 'pouik');
 
 -- --------------------------------------------------------
 
@@ -141,14 +142,16 @@ CREATE TABLE IF NOT EXISTS `produits` (
   `categorie` varchar(255) NOT NULL,
   `sous_cat` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `produits`
 --
 
 INSERT INTO `produits` (`id`, `nom`, `description`, `prix`, `stock`, `image`, `note`, `categorie`, `sous_cat`) VALUES
-(3, 'pouik', 'pouik', 1, 1, 'img/logo.png', 5, 'mariage', 'Chocolat');
+(13, 'produit6', 'produit1', 1, 1, 'img/produit/13.jpg', 5, 'Mariage', 'Chocolat'),
+(14, 'produit2', 'produit2', 1, 1, 'img/logo.png', 5, 'Mariage', 'Chocolat'),
+(15, 'produit3', 'produit3', 1, 1, 'img/logo.png', 5, 'Mariage', 'Chocolat');
 
 -- --------------------------------------------------------
 
