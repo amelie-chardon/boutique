@@ -217,8 +217,7 @@ public function profil($confmdp,$login = "",$mail= "",$mdp = ""){
         $id_achats=$_GET["id_achats"];
 
         $this->connect();
-        $fetch=$this->execute("SELECT produits.id,produits.nom, panier.quantite,produits.prix, produits.image, achats.prix FROM panier RIGHT JOIN produits ON panier.id_produits=produits.id RIGHT JOIN achats ON achats.id_panier=panier.id_achats WHERE id_achats=$id_achats");
-
+        $result=$this->execute("SELECT produits.id,produits.nom, panier.quantite,produits.prix, produits.image, achats.prix FROM produits RIGHT JOIN panier ON panier.id_produits=produits.id RIGHT JOIN achats ON achats.id=panier.id_achats WHERE panier.id_achats=$id_achats");
         ?>
             <table class="actions">
                 <thead>
@@ -232,7 +231,7 @@ public function profil($confmdp,$login = "",$mail= "",$mdp = ""){
                 </thead>
                 <tbody>
         <?php
-       foreach($fetch as list($id_produit,$nom,$quantite,$prix_u,$image,$prix_total))
+       foreach($result as list($id_produit,$nom,$quantite,$prix_u,$image,$prix_total))
        {
             ?>
                     <tr>
@@ -247,7 +246,7 @@ public function profil($confmdp,$login = "",$mail= "",$mdp = ""){
             ?>
                     <tr>
                         <td class="prix_tot" colspan="3">Montant total :</td>
-                        <td class="prix_tot"><?php echo $fetch[0][5]; ?>€</td>
+                        <td class="prix_tot"><?php echo $result[0][5]; ?>€</td>
                         <td></td>
                     </tr>
                 </tbody> 
