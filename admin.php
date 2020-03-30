@@ -45,12 +45,13 @@ if(!isset($_SESSION['perm'])){
                 <h1>Administration</h1>
 
                     <section class="panneau">
-                      <div class="gestion_produit">
+                      <div class="gestion_produit"> 
                         <article>
 
                         <h2>Ajout de produit</h2>
     
                 <form action="admin.php" method="POST">
+              
                     <label>Nom : </label>
                     <input type="text" name="nom"/><br>
                     <label>Description :</label>
@@ -62,13 +63,12 @@ if(!isset($_SESSION['perm'])){
                    
                    
                    
-                    <label>Photo :</label>
-                    <input type="file" name="img"/></br>
+                    
                     <label>Catégorie(s) : </label>
                     <select name="categorie" required>
-                <option value="mariage" name="mariage">Mariage</option>
-                <option value="anniv" name="anniv">Anniversaire</option>
-                <option value="autre" name="autre">Autre</option>
+                <option value="Mariage" name="Mariage">Mariage</option>
+                <option value="Anniv" name="Anniv">Anniversaire</option>
+                <option value="Autre" name="Autre">Autre</option>
                     </select></br>
                     <label>Sous-Catégorie(s) : </label>
                     <select name="sous_categorie" required>
@@ -76,65 +76,35 @@ if(!isset($_SESSION['perm'])){
                 <option value="Fruit" name="fr">Fruit</option>
                 <option value="Les_deux" name="les_2">Les deux</option>
                     </select></br> 
-                    
-
-
+                
                    
                     <input type="submit" name="send_add_produit"/>
                     
 
                         
                        <?php if(isset($_POST['send_add_produit'])){
+        
         $nom= $_POST['nom'];
         $description=$_POST['description'];
         $stock=$_POST['stock'];
         $prix=$_POST['prix'];
-        $img=$_POST['img'];
         $categorie=$_POST['categorie'];
         $sous_categorie=$_POST['sous_categorie'];
 
 
     if($nom != NULL && $description  != NULL && $stock != NULL &&
-     $prix != NULL && $img != NULL && $categorie != NULL && $sous_categorie != NULL)
+     $prix != NULL && $categorie != NULL && $sous_categorie != NULL)
     {
          
-        if(isset($_FILES['img']) AND !empty($_FILES['img']['name'])) 
-        {
-            $tailleMax = 3145728;
-            $extensionsValides = array('png','jpg');
-            if($_FILES['img']['size'] <= $tailleMax)
-             {
-               $extensionUpload = strtolower(substr(strrchr($_FILES['img']['name'], '.'), 1));
-              
-               if(in_array($extensionUpload, $extensionsValides)) 
-               {
-                
-                  $chemin = "img/produit/".$name.".".$extensionUpload;
-                  $resultat = move_uploaded_file($_FILES['img']['tmp_name'], $chemin);
-
-                  if($resultat) {
                     $connect = mysqli_connect("localhost", "root", "", "boutique");
-                    $requete = "INSERT INTO `produits` (`id`, `nom`, `description`, `prix`, `stock`, `image`, `categorie`, `sous_categorie`) VALUES (NULL,'$nom', '$description', '$prix', '$stock','$img','$categorie','$sous_categorie')";
-                    var_dump($requete);
+                    $requete = "INSERT INTO `produits` (`nom`, `description`, `prix`, `stock`, `categorie`, `sous_cat`) VALUES 
+                    ('$nom', '$description', '$prix', '$stock','$categorie','$sous_categorie')";
                     $query = mysqli_query($connect,$requete);
                     
-                   echo "ok";
+                   echo "Article bien ajouté !";
+                   header('Location:index.php');
                     }
-               else {
-                     echo  "Erreur durant l'importation de votre photo de profil";
-                  }
-               }
-                else 
-               {
-                  echo "Votre photo de profil doit être au format jpg, jpeg, gif ou png";
-               }
-            } 
-            else 
-            {
-               echo "Votre photo de profil ne doit pas dépasser 3Mo";
-            }
-         }
-         
+             
      else
      {
         
@@ -144,47 +114,69 @@ if(!isset($_SESSION['perm'])){
         }
         
        
-       
-}
-   
-
-
 ?>
-</form>
-</article>
+                    </form>
+                </article>
+
+
+
+
+
+
                         <article>
 
-                        <h2>Modération de produit</h2>
-    
-                <form action="admin.php" method="POST">
-                    <label>Nom : </label>
-                    <input type="text" name="nom"/><br>
-                    <label>Description :</label>
-                    <input type="text" name="description"/><br>
-                    <label>Stock : </label>
-                    <input type="password" name="password" required/><br>
-                    <label>Catégorie(s):</label>
-                    <select name="select_cat" required>
-                <optgroup label="Mariage" value="mariage">
-                    <option value="choco" name="choco">Chocolat</option>
-                    <option value="fruit" name="fruit">Fruit</option>
-                    <option value="les_deux" name="les_deux">Les deux</option><br>
-                </optgroup>
-                <optgroup label="Anniversaire" value="anniv">
-                    <option value="choco" name="choco">Chocolat</option>
-                    <option value="fruit" name="fruit">Fruit</option>
-                    <option value="les_deux" name="les_deux">Les deux</option><br>
-                </optgroup>
-                <optgroup label="Autre" value="autre">
-                    <option value="choco" name="choco">Chocolat</option>
-                    <option value="fruit" name="fruit">Fruit</option>
-                    <option value="les_deux" name="les_deux">Les deux</option><br>
-                </optgroup>
-                    <input type="submit" name="send"/>
-                    </form>
+                        <h2>Produit en Vente</h2>
+            <?php
+             
 
+        $i = 0;
+        $connect = mysqli_connect("localhost", "root", "", "boutique");
+        $select = "SELECT * from produits";
+        $query = mysqli_query($connect,$select);
+        $result = mysqli_fetch_all($query);
+        
+        
+        
+        ?>
+        <table>
+                <tbody>
+                    <tr>
+                        <th>Img</th>
+                        <th>Nom</th>
+                        <th>Description</th>
+                        <th>Prix</th>
+                        <th>Stock</th>
+                        <th>Note</th>
+                        <th>Catégorie</th>
+                        <th>Sous Catégorie(s)</th>
+                    </tr>
+        <?php
+       foreach($result as $data)
+       {
+        
+            ?>
+                    <tr>
+                       <td><?php echo $data[5] ?></td>
+                       <td><?php echo $data[1] ?></td> 
+                       <td><?php echo $data[2] ?></td>
+                       <td><?php echo $data[3] ?></td>
+                       <td><?php echo $data[4] ?></td>
+                       <td><?php echo $data[6] ?></td>
+                       <td><?php echo $data[7] ?></td>
+                       <td><?php echo $data[8] ?></td>
+                       <td><button><a href="modify_product?id=<?php echo $data[0]; ?>">Modifier</a></button></td>
+                       <td><button><a href="confirm_delete?id=<?php echo $data[0]; ?>">Delete</a></button></td>
+                    </tr>
+       <?php
+       }
+       $i++
+       
+       ?>
+                </tbody> 
+            </table>
+    
                         </article>
-                    </div>
+                      </div>
 
 
                     <div class="gestion_cat">
@@ -196,27 +188,83 @@ if(!isset($_SESSION['perm'])){
                         <label>Nom : </label>
                         <input type="text" name="nom"/><br>
                   
-                        <input type="submit" name="send"/>
-                        </form>
+                        <input type="submit" name="send_add_cat"/>
+
+                        <?php if(isset($_POST['send_add_cat'])){
+        
+        $nom= $_POST['nom'];
+        
+    if($nom != NULL)
+    {
+         
+                    $connect = mysqli_connect("localhost", "root", "", "boutique");
+                    $requete = "INSERT INTO `categories` (`nom`) VALUES 
+                    ('$nom')";
+                    $query = mysqli_query($connect,$requete);
+                    
+                   echo "Catégorie bien ajoutée !";
+                   //s'ajoute en deux fois , si ajout header location, bug , car deja use plus haut...//
+                    }
+             
+     else
+     {
+        
+        echo "empty";
+     }
+         
+        }
+        
+       
+?>
+                    </form>
 
                         </article>
 
 
-                        <article>
+                      <h2>Catégorie(s) Disponible </h2>
 
-                        <h2>Modération de categories</h2>
+                      <?php
+             
+             
 
-                        <form action="admin.php" method="POST">
-                        <label>Nom : </label>
-                        <input type="text" name="nom"/><br>
-                  
-                        <input type="submit" name="send"/>
-                        </form>
 
-                        </article>
-                    </div>
+             $i = 0;
+             $connect = mysqli_connect("localhost", "root", "", "boutique");
+             $select = "SELECT * from categories";
+             $query = mysqli_query($connect,$select);
+             $result = mysqli_fetch_all($query);
+             
+             
+             ?>
+             <table>
+                     <tbody>
+                         <tr>
+                             <th>Nom</th>
+                            <!-- <th>Articles dependants</th> -->
+                         </tr>
+             <?php
+            foreach($result as $data)
+            {
+             
+                 ?>
+                         <tr>
+                            <td><?php echo $data[1] ?></td> 
+                            <td><button><a href="modify_cat?id=<?php echo $data[0]; ?>">Modifier</a></button></td>
+                            <td><button><a href="confirm_delete_cat?id=<?php echo $data[0]; ?>">Delete</a></button></td>
+                         </tr>
+            <?php
+            }
+            $i++
+            
+            ?>
+                     </tbody> 
+                 </table>
+         
+                             </article>
+                           </div>
 
-                    <div class="gestion_sous_cat">
+
+                 <!--   <div class="gestion_sous_cat">
                         <article>
 
                         <h2>Création de sous-categories</h2>
@@ -225,29 +273,40 @@ if(!isset($_SESSION['perm'])){
                         <label>Nom : </label>
                         <input type="text" name="nom"/><br>
                   
-                        <input type="submit" name="send"/>
-                        </form>
-
-                        </article>
-
-
-                        <article>
-
-                        <h2>Modération de sous-categories</h2>
-
-                        <form action="admin.php" method="POST">
-                        <label>Nom : </label>
-                        <input type="text" name="nom"/><br>
-
-
-                        <input type="submit" name="send"/>
-                        </form>
-
-                        </article>
-                    </div>
-
+                        <input type="submit" name="add_sous_cat"/>
+                        <?php /*if(isset($_POST['add_sous_cat'])){
+        
+        $nom= $_POST['nom'];
+        
+    if($nom != NULL)
+    {
+         
+                    $connect = mysqli_connect("localhost", "root", "", "boutique");
+                    $requete = "INSERT INTO `sous_categories` (`nom`) 
+                                VALUES ('$nom')"; 
+                                
+                    $query = mysqli_query($connect,$requete);
+                    var_dump($query);
                     
+                   echo "Sous-Catégorie bien ajoutée !";
+                   //s'ajoute en deux fois , si ajout header location, bug , car deja use plus haut...//
+                    }
+             
+     else
+     {
+        
+        echo "empty";
+     }
+         
+        }
+  */      
+       
+?>
+                 </form>
 
+                        </article>
+                    
+ -->  
                     </section>
 
                 <?php require 'include/footer.php'?>
