@@ -6,6 +6,7 @@ class user extends bdd{
     private $login = NULL;
     private $role = NULL;
     private $mail = NULL;
+    private $recherche = NULL;
 
 
 //Fonctions inscription/connexion/déconnexion/désinscription/est connecté
@@ -117,7 +118,7 @@ public function profil($confmdp,$login = "",$mail= "",$mdp = ""){
             }
             if($mdp != NULL)
             {
-                $mdp = password_hash($mdp, PASSWORD_BCRYPT, array('cost' => 12));
+                $mdp = password_hash($mdp, PASSWORD_BCRYPT, array('cost' => 5));
                 $request = "UPDATE utilisateurs SET mdp = \"$mdp\" WHERE id = $this->id";
                 $query = mysqli_query($this->connexion,$request);
             }
@@ -211,7 +212,40 @@ public function profil($confmdp,$login = "",$mail= "",$mdp = ""){
     }
 
 
+    public function recup_image_produit(){
 
+        
+        $this->connect();
+        $request ="SELECT image
+                   FROM produits
+                   WHERE id= '" . $_GET['id'] . "'";
+        $query = mysqli_query($this->connexion,$request);
+        $result = mysqli_fetch_assoc($query);
+
+         if($result == true)
+         {
+            ?>
+            <img src="img/profil/<?php echo $_GET['id']?>.jpg" />
+            <?php
+         }
+         
+
+    }
+
+    public function search(){
+        $i=0;
+        $search=$_POST["search"];
+
+        $this->connect();
+        $request = "SELECT *
+                    FROM produits 
+                    LIKE '%$search%";
+        $query = mysqli_query($this->connect,$request);
+        $fetch =mysqli_fetch_all($query);
+
+
+
+    }
 //Fonctions GET
 
     public function getid(){
@@ -229,6 +263,7 @@ public function profil($confmdp,$login = "",$mail= "",$mdp = ""){
     public function getrole(){
         return $this->role;
     }
+    
 
 }
 ?>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  lun. 30 mars 2020 à 07:43
+-- Généré le :  mer. 01 avr. 2020 à 07:33
 -- Version du serveur :  10.4.10-MariaDB
 -- Version de PHP :  7.3.12
 
@@ -96,22 +96,6 @@ CREATE TABLE IF NOT EXISTS `categories_produits` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `notes`
---
-
-DROP TABLE IF EXISTS `notes`;
-CREATE TABLE IF NOT EXISTS `notes` (
-  `note_id` int(11) NOT NULL AUTO_INCREMENT,
-  `produit_id` int(11) NOT NULL,
-  `utilisateur_id` int(11) NOT NULL,
-  `note` int(11) NOT NULL,
-  `commentaire` varchar(30) NOT NULL,
-  PRIMARY KEY (`note_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `panier`
 --
 
@@ -137,8 +121,7 @@ CREATE TABLE IF NOT EXISTS `produits` (
   `description` text NOT NULL,
   `prix` int(11) NOT NULL,
   `stock` int(11) NOT NULL,
-  `image` varchar(255) NOT NULL DEFAULT 'img/logo.png',
-  `note` int(11) NOT NULL DEFAULT 5,
+  `image` varchar(255) NOT NULL DEFAULT 'img/logo.jpg',
   `categorie` varchar(255) NOT NULL,
   `sous_cat` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
@@ -148,10 +131,10 @@ CREATE TABLE IF NOT EXISTS `produits` (
 -- Déchargement des données de la table `produits`
 --
 
-INSERT INTO `produits` (`id`, `nom`, `description`, `prix`, `stock`, `image`, `note`, `categorie`, `sous_cat`) VALUES
-(13, 'produit6', 'produit1', 1, 1, 'img/produit/13.jpg', 5, 'Mariage', 'Chocolat'),
-(14, 'produit2', 'produit2', 1, 1, 'img/logo.png', 5, 'Mariage', 'Chocolat'),
-(15, 'produit3', 'produit3', 1, 1, 'img/logo.png', 5, 'Mariage', 'Chocolat');
+INSERT INTO `produits` (`id`, `nom`, `description`, `prix`, `stock`, `image`, `categorie`, `sous_cat`) VALUES
+(13, 'produit6', 'produit1', 1, 1, 'img/produit/13.jpg', 'Mariage', 'Chocolat'),
+(14, 'produit2', 'produit2', 1, 1, 'img/logo.jpg', 'Mariage', 'Chocolat'),
+(15, 'produit3', 'produit3', 1, 1, 'img/logo.jpg', 'Mariage', 'Chocolat');
 
 -- --------------------------------------------------------
 

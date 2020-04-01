@@ -146,7 +146,7 @@ if(!isset($_SESSION['perm'])){
                         <th>Description</th>
                         <th>Prix</th>
                         <th>Stock</th>
-                        <th>Note</th>
+                       
                         <th>Catégorie</th>
                         <th>Sous Catégorie(s)</th>
                     </tr>
@@ -163,7 +163,7 @@ if(!isset($_SESSION['perm'])){
                        <td><?php echo $data[4] ?></td>
                        <td><?php echo $data[6] ?></td>
                        <td><?php echo $data[7] ?></td>
-                       <td><?php echo $data[8] ?></td>
+                       
                        <td><button><a href="modify_product?id=<?php echo $data[0]; ?>">Modifier</a></button></td>
                        <td><button><a href="confirm_delete?id=<?php echo $data[0]; ?>">Delete</a></button></td>
                     </tr>

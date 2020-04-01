@@ -12,9 +12,10 @@
     </div>
     <div id="menu2">
         <?php require 'include/nav2.php'?>
-        <form>
-            <input type="text" name="search" placeholder="Recherche">
-            <input type="submit" name="submit" value="ok">
-        </form>
+
+        <form method="GET" action="resultat_recherche.php">
+            <input type="text" name="search" placeholder="Search">
+            <input type="submit" value="Chercher">
+ </form>
     </div>
 </header>

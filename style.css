@@ -301,3 +301,11 @@ table {
   {
       margin:auto;
   }
+
+  /*PRODUIT*/
+
+  #produit_img
+  {
+     width: 250px;
+     height: 250px;
+  }
