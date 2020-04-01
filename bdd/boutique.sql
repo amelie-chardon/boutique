@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  lun. 30 mars 2020 à 12:45
--- Version du serveur :  5.7.26
--- Version de PHP :  7.2.18
+-- Généré le :  mer. 01 avr. 2020 à 07:33
+-- Version du serveur :  10.4.10-MariaDB
+-- Version de PHP :  7.3.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,7 +21,7 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `boutique`
 --
-CREATE DATABASE IF NOT EXISTS `boutique` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE DATABASE IF NOT EXISTS `boutique` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `boutique`;
 
 -- --------------------------------------------------------
@@ -34,19 +34,11 @@ DROP TABLE IF EXISTS `achats`;
 CREATE TABLE IF NOT EXISTS `achats` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_utilisateurs` int(11) NOT NULL,
+  `id_panier` int(11) NOT NULL,
   `prix` int(11) NOT NULL,
   `date_achat` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-
---
--- Déchargement des données de la table `achats`
---
-
-INSERT INTO `achats` (`id`, `id_utilisateurs`, `prix`, `date_achat`) VALUES
-(1, 1, 3, '2020-03-24 11:00:00'),
-(2, 3, 2, '2020-03-29 07:00:00'),
-(3, 2, 4, '2020-03-29 18:00:00');
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -99,16 +91,7 @@ CREATE TABLE IF NOT EXISTS `categories_produits` (
   `id_produits` int(11) NOT NULL,
   `id_categories` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-
---
--- Déchargement des données de la table `categories_produits`
---
-
-INSERT INTO `categories_produits` (`id`, `id_produits`, `id_categories`) VALUES
-(1, 13, 1),
-(2, 14, 1),
-(3, 15, 1);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -123,18 +106,7 @@ CREATE TABLE IF NOT EXISTS `panier` (
   `id_achats` int(11) NOT NULL,
   `quantite` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
-
---
--- Déchargement des données de la table `panier`
---
-
-INSERT INTO `panier` (`id`, `id_produits`, `id_achats`, `quantite`) VALUES
-(1, 13, 1, 3),
-(2, 15, 2, 1),
-(3, 14, 2, 1),
-(4, 14, 3, 2),
-(5, 15, 3, 2);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -149,8 +121,7 @@ CREATE TABLE IF NOT EXISTS `produits` (
   `description` text NOT NULL,
   `prix` int(11) NOT NULL,
   `stock` int(11) NOT NULL,
-  `image` varchar(255) NOT NULL DEFAULT 'img/logo.png',
-  `note` int(11) NOT NULL DEFAULT '5',
+  `image` varchar(255) NOT NULL DEFAULT 'img/logo.jpg',
   `categorie` varchar(255) NOT NULL,
   `sous_cat` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
@@ -160,10 +131,32 @@ CREATE TABLE IF NOT EXISTS `produits` (
 -- Déchargement des données de la table `produits`
 --
 
-INSERT INTO `produits` (`id`, `nom`, `description`, `prix`, `stock`, `image`, `note`, `categorie`, `sous_cat`) VALUES
-(13, 'produit6', 'produit1', 1, 1, 'img/produit/13.jpg', 5, 'Mariage', 'Chocolat'),
-(14, 'produit2', 'produit2', 1, 1, 'img/logo.png', 5, 'Mariage', 'Chocolat'),
-(15, 'produit3', 'produit3', 1, 1, 'img/logo.png', 5, 'Mariage', 'Chocolat');
+INSERT INTO `produits` (`id`, `nom`, `description`, `prix`, `stock`, `image`, `categorie`, `sous_cat`) VALUES
+(13, 'produit6', 'produit1', 1, 1, 'img/produit/13.jpg', 'Mariage', 'Chocolat'),
+(14, 'produit2', 'produit2', 1, 1, 'img/logo.jpg', 'Mariage', 'Chocolat'),
+(15, 'produit3', 'produit3', 1, 1, 'img/logo.jpg', 'Mariage', 'Chocolat');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `roles`
+--
+
+DROP TABLE IF EXISTS `roles`;
+CREATE TABLE IF NOT EXISTS `roles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `roles`
+--
+
+INSERT INTO `roles` (`id`, `role`) VALUES
+(1, 'admin'),
+(2, 'client'),
+(3, 'random');
 
 -- --------------------------------------------------------
 
@@ -202,20 +195,10 @@ INSERT INTO `sous_categories` (`id`, `nom`, `id_categories`) VALUES
 
 DROP TABLE IF EXISTS `sous_categories_produits`;
 CREATE TABLE IF NOT EXISTS `sous_categories_produits` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `id_produits` int(11) NOT NULL,
-  `id_sous_categories` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-
---
--- Déchargement des données de la table `sous_categories_produits`
---
-
-INSERT INTO `sous_categories_produits` (`id`, `id_produits`, `id_sous_categories`) VALUES
-(1, 13, 1),
-(2, 14, 1),
-(3, 15, 1);
+  `id_sous_categories` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 

@@ -5,6 +5,7 @@ class bdd{
     protected $connexion = "";
     private $query="";
     private $result=[];
+    private $pouik="";
 
 
 public function connect()
@@ -44,15 +45,46 @@ public function connect()
             return $this->result;
         }
     }
+    public function pouik($pouik)
+    { 
+        {
+            $this->query=$pouik;
+            $execute=mysqli_query($this->connexion, $pouik);
 
-    public function info_produits($id_produits){
+            // Si le résultat est un booléen 
+            if(is_bool($execute))
+            {
+                $this->result=$execute;
+            }
+            // Si le résultat est un tableau
+            else
+            {
+                $this->result=mysqli_fetch_all($execute);
+            }
+
+            return $this->result;
+        }
+    }
+
+//Fonctions sur la BDD
+
+    public function select_produits($query)
+    {
     $this->connect();
-    $result=$this->execute("SELECT nom, image FROM produits WHERE id=$id_produits");
-    $nom=$result[0][0];
-    $image=$result[0][1];
-
-    return ["nom"=>$nom,"image"=>$image];
-}
+    $result=$this->execute($query);
+    foreach($result as list($id,$nom,$image,$prix))
+        {
+        ?>
+            <article class="bloc_produit">
+                <h3><?php echo $nom; ?></h3>
+                <a href="produit.php?id=<?php echo $id; ?>">
+                    <img class="produit_img" src="<?php echo $image; ?>">
+                </a>
+                <p><?php echo $prix; ?> €</p>
+            </article>
+        <?php
+        }
+    }
 
 }
 

@@ -6,6 +6,7 @@ class user extends bdd{
     private $login = NULL;
     private $role = NULL;
     private $mail = NULL;
+    private $recherche = NULL;
 
 
 //Fonctions inscription/connexion/déconnexion/désinscription/est connecté
@@ -117,7 +118,7 @@ public function profil($confmdp,$login = "",$mail= "",$mdp = ""){
             }
             if($mdp != NULL)
             {
-                $mdp = password_hash($mdp, PASSWORD_BCRYPT, array('cost' => 12));
+                $mdp = password_hash($mdp, PASSWORD_BCRYPT, array('cost' => 5));
                 $request = "UPDATE utilisateurs SET mdp = \"$mdp\" WHERE id = $this->id";
                 $query = mysqli_query($this->connexion,$request);
             }
@@ -185,15 +186,12 @@ public function profil($confmdp,$login = "",$mail= "",$mdp = ""){
         {
         ?>
             <table class="actions">
-                <thead>
+                <tbody>
                     <tr>
                         <th>Date d'achat</th>
                         <th>Montant</th>
-                        <th>Panier</th>
                         <th></th>
                     </tr>
-                </thead>
-                <tbody>
         <?php
        foreach($fetch as list($id,$date_achat,$prix))
        {
@@ -202,7 +200,7 @@ public function profil($confmdp,$login = "",$mail= "",$mdp = ""){
                     <tr>
                         <td><?php echo $date_achat; ?></td>
                         <td><?php echo $prix; ?>€</td>
-                        <td><form class="formulaire" method="get" action="voir-commande.php" id="panier"><button type="submit" id="submit" name="id_achats" value="<?php echo $id; ?>">Voir ma commande</button></form></td>
+                        <td><form class="formulaire" method="post" action="" id="comment"><button type="submit" id="submit" name="achats_<?php echo $id; ?>">Laisser un avis</button></form></td>
                     </tr>
        <?php
        }
@@ -213,72 +211,41 @@ public function profil($confmdp,$login = "",$mail= "",$mdp = ""){
         }
     }
 
-    public function mon_panier_achats(){
-        $id_achats=$_GET["id_achats"];
+
+    public function recup_image_produit(){
+
+        
+        $this->connect();
+        $request ="SELECT image
+                   FROM produits
+                   WHERE id= '" . $_GET['id'] . "'";
+        $query = mysqli_query($this->connexion,$request);
+        $result = mysqli_fetch_assoc($query);
+
+         if($result == true)
+         {
+            ?>
+            <img src="img/profil/<?php echo $_GET['id']?>.jpg" />
+            <?php
+         }
+         
+
+    }
+
+    public function search(){
+        $i=0;
+        $search=$_POST["search"];
 
         $this->connect();
-        $result=$this->execute("SELECT produits.id,produits.nom, panier.quantite,produits.prix, produits.image, achats.prix FROM produits RIGHT JOIN panier ON panier.id_produits=produits.id RIGHT JOIN achats ON achats.id=panier.id_achats WHERE panier.id_achats=$id_achats");
-        ?>
-            <table class="actions">
-                <thead>
-                    <tr>
-                        <th>Nom</th>
-                        <th>Prix à l'unité</th>
-                        <th>Quantité</th>
-                        <th>Total</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-        <?php
-       foreach($result as list($id_produit,$nom,$quantite,$prix_u,$image,$prix_total))
-       {
-            ?>
-                    <tr>
-                        <td><?php echo $nom; ?></td>
-                        <td><?php echo $prix_u; ?>€</td>
-                        <td><?php echo $quantite ?></td>
-                        <td><?php echo $prix_u*$quantite; ?>€</td>
-                        <td><form class="formulaire" method="get" action="laisser-avis" id="comment"><button type="submit" id="submit" name="id_produits" value="<?php echo $id_produit ; ?>">Laisser un avis</button></form></td>
-                    </tr>
-            <?php
-       }
-            ?>
-                    <tr>
-                        <td class="prix_tot" colspan="3">Montant total :</td>
-                        <td class="prix_tot"><?php echo $result[0][5]; ?>€</td>
-                        <td></td>
-                    </tr>
-                </tbody> 
-            </table>
-    <?php
+        $request = "SELECT *
+                    FROM produits 
+                    LIKE '%$search%";
+        $query = mysqli_query($this->connect,$request);
+        $fetch =mysqli_fetch_all($query);
+
+
+
     }
-
-    public function avis_produits($commentaire,$note){
-        $id_produits=$_GET["id_produits"];
-        $id_utilisateurs=$this->id;
-        if($commentaire!=NULL && $note!=NULL)
-        {
-            $this->connect();
-            $requete=$this->execute("INSERT INTO avis (id_produits, id_utilisateurs, note, commentaire) VALUES (\"$id_produits\",\"$id_utilisateurs\",\"$note\",\"$commentaire\")");
-            if($requete==true)
-            {
-                return "ok";
-            }
-            else
-            {
-                return false;
-            }
-        }
-        else 
-        {
-            return "empty";
-        }
-        ?>
-
-        <?php
-    }
-
 //Fonctions GET
 
     public function getid(){
@@ -296,6 +263,7 @@ public function profil($confmdp,$login = "",$mail= "",$mdp = ""){
     public function getrole(){
         return $this->role;
     }
+    
 
 }
 ?>

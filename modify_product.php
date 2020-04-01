@@ -31,7 +31,7 @@ if(!isset($_SESSION['perm'])){
 <html>
 
 <head>
-        <title>Admin</title> 
+        <title>Modération</title> 
         <link rel="stylesheet" href="style.css">
         <link href="https://fonts.googleapis.com/css?family=Pathway+Gothic+One&display=swap" rel="stylesheet">
 </head>
@@ -124,7 +124,7 @@ if(!isset($_SESSION['perm'])){
                         <article>
                         <h2>Upload photo du produit</h2>
                         <img src="img/produit/<?php echo $_GET['id']?>.jpg" />
-                        <form action="" method="post" enctype="multipart/form-data">
+                        <form action="modify_product.php" method="post" enctype="multipart/form-data">
                         <input type="file" name="avatar"/>
                         
                         <input type="submit" name="valider">
@@ -149,6 +149,7 @@ if(!isset($_SESSION['perm'])){
                           if($resultat) {
                              
                              $connexion = mysqli_connect('Localhost', 'root', '', 'boutique');
+                             var_dump($connexion);
                              $update_pp ="UPDATE produits SET image = '$chemin' WHERE id = '$id'";
                              $query= mysqli_query($connexion,$update_pp);
                              
@@ -167,9 +168,6 @@ if(!isset($_SESSION['perm'])){
                  
                 }
                 ?>
-                    
-                    
-                    
 
                         </article>
                        
