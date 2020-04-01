@@ -200,7 +200,7 @@ public function profil($confmdp,$login = "",$mail= "",$mdp = ""){
                     <tr>
                         <td><?php echo $date_achat; ?></td>
                         <td><?php echo $prix; ?>€</td>
-                        <td><form class="formulaire" method="post" action="" id="comment"><button type="submit" id="submit" name="achats_<?php echo $id; ?>">Laisser un avis</button></form></td>
+                        <td><form class="formulaire" method="get" action="voir-commande.php" id="panier"><button type="submit" id="submit" name="id_achats" value="<?php echo $id; ?>">Voir ma commande</button></form></td>
                     </tr>
        <?php
        }
@@ -208,6 +208,73 @@ public function profil($confmdp,$login = "",$mail= "",$mdp = ""){
                 </tbody> 
             </table>
         <?php
+        }
+    }
+
+    public function mon_panier_achats(){
+        $id_achats=$_GET["id_achats"];
+
+        $this->connect();
+        $fetch=$this->execute("SELECT produits.id,produits.nom, panier.quantite,produits.prix, produits.image, achats.prix FROM panier RIGHT JOIN produits ON panier.id_produits=produits.id RIGHT JOIN achats ON achats.id=panier.id_achats WHERE id_achats=$id_achats");
+        ?>
+            <table class="actions">
+                <tbody>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prix à l'unité</th>
+                        <th>Quantité</th>
+                        <th>Total</th>
+                        <th></th>
+                    </tr>
+        <?php
+       foreach($fetch as list($id_produit,$nom,$quantite,$prix_u,$image,$prix_total))
+       {
+            ?>
+                    <tr>
+                        <td class="bloc_table"><?php echo $nom; ?><img class="produit_img_table" src="<?php echo $image; ?>"></td>
+                        <td><?php echo $prix_u; ?>€</td>
+                        <td><?php echo $quantite ?></td>
+                        <td><?php echo $prix_u*$quantite; ?>€</td>
+                        <td><form class="formulaire" method="get" action="laisser-avis.php" id="comment"><button type="submit" id="submit" name="id_produits" value="<?php echo $id_produit ; ?>">Laisser un avis</button></form></td>
+                    </tr>
+            <?php
+       }
+            ?>
+                    <tr>
+                        <td class="prix_tot" colspan="3">Montant total :</td>
+                        <td class="prix_tot"><?php echo $fetch[0][5]; ?>€</td>
+                        <td></td>
+                    </tr>
+                </tbody> 
+            </table>
+    <?php
+    }
+
+
+    
+    public function avis_produits($commentaire,$note){
+        $id_produits=$_GET["id_produits"];
+        $id_utilisateurs=$this->id;
+        if($commentaire!=NULL && $note!=NULL)
+        {
+            $this->connect();
+            $requete=$this->execute("INSERT INTO avis (id_produits, id_utilisateurs, note, commentaire) VALUES (\"$id_produits\",\"$id_utilisateurs\",\"$note\",\"$commentaire\")");
+            $requete2=$this->execute("UPDATE produits AS target 
+            INNER JOIN (select avis.id_produits,ROUND(AVG(avis.note),1) AS Notemoy FROM avis GROUP BY avis.id_produits) as source
+            ON target.id = source.id_produits
+            SET target.note = source.Notemoy WHERE target.id=$id_produits");
+            if($requete==true)
+            {
+                return "ok";
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else 
+        {
+            return "empty";
         }
     }
 

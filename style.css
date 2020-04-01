@@ -60,6 +60,11 @@ p
     font-size:1.2em;
 }
 
+button[type="submit"]
+{
+    margin:5px;
+}
+
 /*HEADER*/
 
 header
@@ -317,19 +322,23 @@ footer li a:hover
 
 /*TABLEAUX*/
 
+
 table {
     border-collapse: collapse;
     vertical-align: center;
-  }
-  
-  th, td {
-    border: 1px solid black;
-  }
+    margin:15px;
+}
 
-  th, td {
-    padding: 15px;
+th
+{
+    font-size: x-large;
+    padding:10px;
+}
+
+td {
+     padding: 5px;
     text-align: center;
-  }
+}
 
  .actions th:last-child, .actions td:last-child {
     border: none;
@@ -339,6 +348,39 @@ table {
   {
       margin:auto;
   }
+
+  .actions tr:last-child
+  {
+    border: none;
+  }
+
+  .prix_tot
+  {
+      font-weight: bold;
+      font-size: x-large;
+  }
+
+  /*AVIS*/
+
+.note_echelle 
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin:5px;
+}
+
+.note_echelle input[type="radio"]
+{
+    margin-right:15px;
+}
+
+input[type="textarea"]
+{
+    height:100px;
+    width: max-content;
+}
 
   /*PRODUIT*/
 
@@ -375,4 +417,24 @@ table {
     max-width:25vw;
     margin:10px;
     padding:5px;
+}
+
+/*VOIR COMMANDE*/
+.produit_img_table
+{
+    width: 100px;
+    height: 100px;
+    margin:5px;
+}
+
+.bloc_table
+{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+    margin:10px;
 }

@@ -38,7 +38,7 @@ $id_produits=$_GET["id_produits"];
 $info_produits=$_SESSION["bdd"]->info_produits($id_produits);
 ?>
 <h2>Produit : <?php echo $info_produits["nom"] ;?></h2>
-<img src="<?php echo $info_produits["image"] ;?>"/>
+<img class="produit_img" src="<?php echo $info_produits["image"] ;?>"/>
 <?php
 //Formulaire de commentaire
 ?>

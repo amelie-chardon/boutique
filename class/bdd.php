@@ -68,6 +68,16 @@ public function connect()
 
 //Fonctions sur la BDD
 
+    public function info_produits($id_produits)
+    {
+    $this->connect();
+    $result=$this->execute("SELECT nom, image FROM produits WHERE id=$id_produits");
+    $nom=$result[0][0];
+    $image=$result[0][1];
+
+    return ["nom"=>$nom,"image"=>$image];
+}
+
     public function select_produits($query)
     {
     $this->connect();
