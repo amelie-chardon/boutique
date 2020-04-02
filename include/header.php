@@ -16,6 +16,6 @@
         <form method="GET" action="resultat_recherche.php">
             <input type="text" name="search" placeholder="Search">
             <input type="submit" value="Chercher">
- </form>
+        </form>
     </div>
 </header>
