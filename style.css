@@ -55,6 +55,15 @@ form
     margin:0;
 }
 
+p
+{
+    font-size:1.2em;
+}
+
+button[type="submit"]
+{
+    margin:5px;
+}
 
 /*HEADER*/
 
@@ -181,7 +190,6 @@ footer li a:hover
     margin:15px;
     display:flex;
     flex-direction: column;
-    flex-wrap: wrap;
     justify-content: flex-start;
     justify-items: center;
     align-content: center;
@@ -195,8 +203,7 @@ footer li a:hover
 {
     margin:15px;
     display:flex;
-    flex-direction: column;
-    flex-wrap: wrap;
+    flex-direction:column ;
     justify-content: flex-start;
     justify-items: center;
     align-content: center;
@@ -204,6 +211,42 @@ footer li a:hover
     min-height: 45vh;
     background-color: rgb(235, 157, 157) ;
     margin-bottom:5vh;
+}
+
+.section_wrap
+{
+    display: flex;
+    flex-wrap: wrap;
+    width: 80vw;
+    flex-direction:row;
+    justify-content: space-evenly;
+    align-content: space-between;
+}
+
+.bloc_produit
+{
+    display:flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+    max-width:25vw;
+    margin:10px;
+    padding:5px;
+}
+
+.produit_img
+{
+   width: 200px;
+   height: 200px;
+   margin:15px;
+}
+
+.produit_img:hover
+{
+    transform: scale(1.2);
 }
 
 /*INSCRIPTION/CONNEXION*/
@@ -279,19 +322,23 @@ footer li a:hover
 
 /*TABLEAUX*/
 
+
 table {
     border-collapse: collapse;
     vertical-align: center;
-  }
-  
-  th, td {
-    border: 1px solid black;
-  }
+    margin:15px;
+}
 
-  th, td {
-    padding: 15px;
+th
+{
+    font-size: x-large;
+    padding:10px;
+}
+
+td {
+     padding: 5px;
     text-align: center;
-  }
+}
 
  .actions th:last-child, .actions td:last-child {
     border: none;
@@ -302,6 +349,39 @@ table {
       margin:auto;
   }
 
+  .actions tr:last-child
+  {
+    border: none;
+  }
+
+  .prix_tot
+  {
+      font-weight: bold;
+      font-size: x-large;
+  }
+
+  /*AVIS*/
+
+.note_echelle 
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin:5px;
+}
+
+.note_echelle input[type="radio"]
+{
+    margin-right:15px;
+}
+
+input[type="textarea"]
+{
+    height:100px;
+    width: max-content;
+}
+
   /*PRODUIT*/
 
   #produit_img
@@ -309,3 +389,52 @@ table {
      width: 250px;
      height: 250px;
   }
+
+/*CONTACT*/
+
+.photo_profil
+{
+    max-height: 250px;
+}
+
+.logo
+{
+    width: 25px;
+}
+
+/*PRESENTATION*/
+
+.bloc_texte
+{
+    display:flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+    max-width:25vw;
+    margin:10px;
+    padding:5px;
+}
+
+/*VOIR COMMANDE*/
+.produit_img_table
+{
+    width: 100px;
+    height: 100px;
+    margin:5px;
+}
+
+.bloc_table
+{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+    margin:10px;
+}

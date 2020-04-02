@@ -29,7 +29,7 @@ if($_SESSION['user']->isConnected() != true){
 
 
 <section class="panneau">
-<h1> Mon profil </h1>
+<h1> Mon compte </h1>
 
     <section class="bloc">
         <h2>Mes Informations</h2>

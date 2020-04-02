@@ -66,6 +66,36 @@ public function connect()
         }
     }
 
-} 
+//Fonctions sur la BDD
+
+    public function info_produits($id_produits)
+    {
+    $this->connect();
+    $result=$this->execute("SELECT nom, image FROM produits WHERE id=$id_produits");
+    $nom=$result[0][0];
+    $image=$result[0][1];
+
+    return ["nom"=>$nom,"image"=>$image];
+}
+
+    public function select_produits($query)
+    {
+    $this->connect();
+    $result=$this->execute($query);
+    foreach($result as list($id,$nom,$image,$prix))
+        {
+        ?>
+            <article class="bloc_produit">
+                <h3><?php echo $nom; ?></h3>
+                <a href="produit.php?id=<?php echo $id; ?>">
+                    <img class="produit_img" src="<?php echo $image; ?>">
+                </a>
+                <p><?php echo $prix; ?> €</p>
+            </article>
+        <?php
+        }
+    }
+
+}
 
 ?>

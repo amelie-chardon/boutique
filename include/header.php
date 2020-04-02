@@ -12,7 +12,7 @@
     </div>
     <div id="menu2">
         <?php require 'include/nav2.php'?>
-
+       
         <form method="GET" action="resultat_recherche.php">
             <input type="text" name="search" placeholder="Search">
             <input type="submit" value="Chercher">
