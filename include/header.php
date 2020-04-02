@@ -7,14 +7,14 @@
         <img id="logo-top" src="img/logo.png">
         <h1>Amélie & Sarah</h1>
     </div>
-    <div id="search">
 
-    </div>
     <div id="menu2">
         <?php require 'include/nav2.php'?>
-        <form>
-            <input type="text" name="search" placeholder="Recherche">
-            <input type="submit" name="submit" value="ok">
-        </form>
+        <div id="search">
+            <form method="GET" action="resultat_recherche.php">
+                <input type="text" name="search" placeholder="Search">
+                <input type="submit" value="Chercher">
+            </form>
+        </div>
     </div>
 </header>
