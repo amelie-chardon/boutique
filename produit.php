@@ -35,7 +35,7 @@ if(!isset($_SESSION['user'])){
    
 <?php 
                         if ($_GET['id']==true){
-//condition à add, si le stock est suffisant
+
                          
                             $id= $_GET['id'];
                             $connect = mysqli_connect('localhost', 'root', '','boutique');
@@ -54,6 +54,18 @@ if(!isset($_SESSION['user'])){
                             <h2><?php echo $data['description']?></h2>
                             <p>Stock disponible : <?php echo $data['stock']?> </p>
                             <h2><?php echo $data['prix']?>€</h2>
+                            <?php
+                            if($data['stock']!=0){
+                                ?>
+                                <a href="panier.php?action-ajout&amp;l-<?php echo $data['nom'];?>&amp;q-<?php echo $data['stock'];?>&amp;p-<?php echo $data['prix'];?>"> Ajouter au panier </a>
+                            <?php
+                            }
+                            else{
+                                ?>
+                                <p>En cours de réapro</p>
+                            <?php
+                            }
+                            ?>
                        
                         </article>
 
