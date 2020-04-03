@@ -44,7 +44,7 @@ if(!isset($_SESSION['user'])){
             <td>Nom du produit</td>
             <td>Prix unitaire</td>
             <td>Quantité</td>
-            <td>Action</td>
+            <td>Action</td> 
         </tr>
         <?php 
              

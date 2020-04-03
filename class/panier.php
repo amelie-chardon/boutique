@@ -59,7 +59,7 @@ function modify_quantity_product($id_produit,$quantite){
 
 }
 
-function delete_product_panier($id_produit){
+function delete_product_panier($id_produit){ 
     if(creation_panier()){
         //création de tableau temporaire
         $i=0;

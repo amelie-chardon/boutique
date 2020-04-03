@@ -37,7 +37,7 @@ class user extends bdd{
                 }
                 
                 else{
-                    return "log";
+                    return "log"; 
                 }
             }
             else{ 
