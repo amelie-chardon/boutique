@@ -34,7 +34,7 @@ if(!isset($_SESSION['user'])){
 <section class="panneau-jaune">
    
 <?php 
-                        if ($_GET['id']==true){
+                        if ($_GET['id']){
 
                          
                             $id= $_GET['id'];
@@ -57,7 +57,7 @@ if(!isset($_SESSION['user'])){
                             <?php
                             if($data['stock']!=0){
                                 ?>
-                                <a href="panier.php?action-ajout&amp;l-<?php echo $data['nom'];?>&amp;q-<?php echo $data['stock'];?>&amp;p-<?php echo $data['prix'];?>"> Ajouter au panier </a>
+                               <button> <a href="panier.php?action-ajout&amp;l-<?php echo $data['nom'];?>&amp;q-<?php echo $data['stock'];?>&amp;p-<?php echo $data['prix'];?>"> Ajouter au panier </a></button>
                             <?php
                             }
                             else{
@@ -71,15 +71,25 @@ if(!isset($_SESSION['user'])){
 
                         <article class="zone_avis">
                             <div class="avis">
+                            <h2>Les derniers avis</h2>
 
-                            </div>
+                            <?php 
+                            
+
+                        }
+                        else
+                        {
+                            echo 'produit pas trouver';
+                        }
+                            ?>
+                           
+                            <h2>Vous souhaitez laisser un avis</h2>
                             <?php
-                        }
-                        //test
-                        else{
-                            echo "niet";
-                        }
-                         ?>   
+                            $id = $_GET['id']
+                            ?>
+                            <button><a href="laisser-avis?id=<?php echo $id; ?>">Page produit</a></button>
+                            </div>
+                               
                             <div class="zone_creation_avis">
 
                             </div>
