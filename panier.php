@@ -48,7 +48,9 @@ if(!isset($_SESSION['user'])){
         </tr>
         <?php 
              
+             $_SESSION["user"]->creation_panier();
              
+             $_SESSION["user"]->add_product_panier($nom,$quantite,$prix_produit);
             $i=0; 
             $nb_produit=count($_SESSION['panier']['quantite']);
             var_dump($nb_produit);

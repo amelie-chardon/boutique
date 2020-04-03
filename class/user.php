@@ -6,6 +6,12 @@ class user extends bdd{
     private $login = NULL;
     private $role = NULL;
     private $mail = NULL;
+    private $nom = NULL;
+    private $prix_produit = NULL;
+    private $quantite = NULL;
+    
+
+
     
     
 
@@ -440,6 +446,25 @@ function delete_panier(){
 
 
 //Fonctions GET
+    public function getidproduit(){
+        return $this->id;
+    }
+
+    public function getnomproduit(){
+        return $this->nom;
+    }
+
+    public function getprix(){
+        return $this->prix;
+    }
+
+    public function getstock(){
+        return $this->quantite;
+    }
+
+
+
+
 
     public function getid(){
         return $this->id;
