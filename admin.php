@@ -37,11 +37,13 @@ if(!isset($_SESSION['perm'])){
 </head>
 
     <body>
-    <main>
     <?php require 'include/header.php'?>
+
+    <main>
     
-    <h1>Administration</h1>
     <section class="panneau">
+    <h1>Administration</h1>
+
         <div class="gestion_produit"> 
             <article>
             <h2>Ajout de produit</h2>
@@ -282,10 +284,10 @@ if(!isset($_SESSION['perm'])){
  -->  
                     </section>
 
-                <?php require 'include/footer.php'?>
 
         </main>
 
+        <?php require 'include/footer.php'?>
 
     </body>
 

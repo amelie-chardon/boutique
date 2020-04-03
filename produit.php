@@ -18,7 +18,7 @@ if(!isset($_SESSION['user'])){
 ?>
 
 <head>
-        <title>Resultat</title> 
+        <title>Page produit</title> 
         <link rel="stylesheet" href="style.css">
         <link href="https://fonts.googleapis.com/css?family=Pathway+Gothic+One&display=swap" rel="stylesheet">
         <meta charset="UTF-8">
@@ -32,12 +32,11 @@ if(!isset($_SESSION['user'])){
 <main>
 
 <section class="panneau-jaune">
-   
 <?php 
-                        if ($_GET['id']==true){
-//condition à add, si le stock est suffisant
+                        if ($_GET['id_produits']){
+
                          
-                            $id= $_GET['id'];
+                            $id= $_GET['id_produits'];
                             $connect = mysqli_connect('localhost', 'root', '','boutique');
                             $select="SELECT *
                                      FROM produits
@@ -47,32 +46,60 @@ if(!isset($_SESSION['user'])){
                             
 
                             ?> 
+                    <section class="bloc">
+
                         <article class="fiche_produit">
                             
                             <h1><?php echo $data['nom']?></h1>
-                            <img id="produit_img" src="img/produit/<?php echo $data['id']?>.jpg" />
+                            <img id="produit_img" src="<?php echo $data['image']?>" />
                             <h2><?php echo $data['description']?></h2>
                             <p>Stock disponible : <?php echo $data['stock']?> </p>
                             <h2><?php echo $data['prix']?>€</h2>
+                            <?php
+                            if($data['stock']!=0){
+                                ?>
+                               <button> <a href="panier.php?action-ajout&amp;id=<?php echo $data['id'];?>&amp;l=<?php echo $data['nom'];?>&amp;q=<?php echo $data['stock'];?>&amp;p=<?php echo $data['prix'];?>"> Ajouter au panier (+1)</a></button>
+                            <?php
+                            }
+                            else{
+                                ?>
+                                <p>En cours de réapro</p>
+                            <?php
+                            }
+                            ?>
                        
                         </article>
+                    </section>
+
+                    <section class="bloc_text">
 
                         <article class="zone_avis">
                             <div class="avis">
+                            <h2>Les derniers avis</h2>
 
-                            </div>
+                            <?php 
+                            
+
+                        }
+                        else
+                        {
+                            echo 'produit pas trouver';
+                        }
+                            ?>
+                           
+                            <h2>Vous souhaitez laisser un avis</h2>
                             <?php
-                        }
-                        //test
-                        else{
-                            echo "niet";
-                        }
-                         ?>   
+                            $id = $_GET['id_produits']
+                            ?>
+                            <button><a href="laisser-avis?id_produits=<?php echo $id; ?>">Page produit</a></button>
+                            </div>
+                               
                             <div class="zone_creation_avis">
 
                             </div>
 
                         </article>
+                    </section>
 
                         <aside class="produit_similaire">
 

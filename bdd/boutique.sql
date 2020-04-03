@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mer. 01 avr. 2020 à 16:41
+-- Généré le :  ven. 03 avr. 2020 à 10:32
 -- Version du serveur :  5.7.26
 -- Version de PHP :  7.2.18
 
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `achats` (
 
 INSERT INTO `achats` (`id`, `id_utilisateurs`, `prix`, `date_achat`) VALUES
 (1, 1, 3, '2020-03-24 11:00:00'),
-(2, 3, 2, '2020-03-29 07:00:00'),
+(2, 3, 3, '2020-03-29 07:00:00'),
 (3, 2, 4, '2020-03-29 18:00:00');
 
 -- --------------------------------------------------------
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `avis` (
   `note` int(11) NOT NULL,
   `commentaire` varchar(255) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `avis`
@@ -72,7 +72,8 @@ INSERT INTO `avis` (`id`, `id_produits`, `id_utilisateurs`, `note`, `commentaire
 (1, 15, 1, 2, 'je ne recommande pas'),
 (2, 15, 2, 5, 'RAS'),
 (3, 14, 2, 4, 'super produit !'),
-(4, 13, 3, 4, 'trÃ¨s bon');
+(4, 13, 3, 4, 'trÃ¨s bon'),
+(5, 13, 3, 5, 'super produit, je recommande vivement');
 
 -- --------------------------------------------------------
 
@@ -94,8 +95,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
 INSERT INTO `categories` (`id`, `nom`) VALUES
 (1, 'mariage'),
 (2, 'anniversaire'),
-(3, 'autre'),
-(6, 'pouik');
+(3, 'autre');
 
 -- --------------------------------------------------------
 
@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `categories_produits` (
   `id_produits` int(11) NOT NULL,
   `id_categories` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `categories_produits`
@@ -118,7 +118,8 @@ CREATE TABLE IF NOT EXISTS `categories_produits` (
 INSERT INTO `categories_produits` (`id`, `id_produits`, `id_categories`) VALUES
 (1, 13, 1),
 (2, 14, 1),
-(3, 15, 1);
+(3, 15, 1),
+(4, 13, 2);
 
 -- --------------------------------------------------------
 
@@ -170,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `produits` (
 --
 
 INSERT INTO `produits` (`id`, `nom`, `description`, `prix`, `stock`, `image`, `note`) VALUES
-(13, 'produit6', 'produit1', 1, 1, 'img/produit/13.jpg', 4),
+(13, 'produit6', 'produit1', 1, 1, 'img/produit/13.jpg', 4.5),
 (14, 'produit2', 'produit2', 1, 1, 'img/logo.png', 4),
 (15, 'produit3', 'produit3', 1, 1, 'img/logo.png', 3.5);
 

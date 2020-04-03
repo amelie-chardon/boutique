@@ -6,7 +6,14 @@ class user extends bdd{
     private $login = NULL;
     private $role = NULL;
     private $mail = NULL;
-    private $recherche = NULL;
+    private $nom = NULL;
+    private $prix_produit = NULL;
+    private $quantite = NULL;
+    
+
+
+    
+    
 
 
 //Fonctions inscription/connexion/déconnexion/désinscription/est connecté
@@ -30,7 +37,7 @@ class user extends bdd{
                 }
                 
                 else{
-                    return "log";
+                    return "log"; 
                 }
             }
             else{ 
@@ -313,7 +320,151 @@ public function profil($confmdp,$login = "",$mail= "",$mdp = ""){
 
 
     }
+
+//PANIER FUNCTION
+
+function creation_panier(){
+    if(!isset($_SESSION['panier'])){
+        
+        $_SESSION['panier']=array();
+        $_SESSION['panier']['nom']=array();
+        $_SESSION['panier']['quantite']=array();
+        $_SESSION['panier']['prix']=array();
+
+    }
+    return true;
+}
+
+function add_product_panier($nom,$quantite,$prix_produit){
+    if(creation_panier()){
+        
+        $position_produit=array_search($nom,$_SESSION['panier']['nom']);
+
+        if($position_produit!== false){
+            $_SESSION['panier']['quantite'][$position_produit]+= $quantite;
+        }
+        else {
+
+            array_push($_SESSION['panier']['nom'],$nom);
+            array_push($_SESSION['panier']['quantite'],$quantite);
+            array_push($_SESSION['panier']['prix'],$prix_produit);
+        }
+    }
+    //si pas de panier mais add product , erreur
+    else {
+
+        echo 'erreur panier non existant';
+    }
+}
+
+function modify_quantity_product($nom,$quantite){
+    if(creation_panier()){
+        //si la quantité d'un article dans le panier est sup à 0 
+        if($quantite>0){
+            //recherche la position du produit dans le panier
+            $position_produit=array_search($_SESSION['panier']['nom'],$nom);
+            //si il le trouve la position
+            if($position_produit!==false){
+                //
+                $_SESSION['panier']['nom'][$position_produit]=$quantite;
+            }
+        }
+        //quantité d'article inferieur à 0 d'un article
+        else{
+           delete_product_panier($nom);
+        }
+    }
+    else{
+        echo 'erreur';
+    }
+
+}
+
+function delete_product_panier($nom){
+    if(creation_panier()){
+        //création de tableau temporaire
+        $i=0;
+        $tmp =array();
+        $tmp['nom']=array();
+        $tmp['quantite']=array();
+        $tmp['prix']=array();
+
+        for($i; $i<count($_SESSION['panier']['nom']); $i++){
+            
+            if($_SESSION['panier']['nom'][$i] !== $nom){
+            
+            array_push($_SESSION['panier']['nom'],$_SESSION['panier']['nom'][$i]);
+            array_push($_SESSION['panier']['quantite'],$_SESSION['panier']['quantite'][$i]);
+            array_push($_SESSION['panier']['prix'],$_SESSION['panier']['prix'][$i]);
+            }
+
+        }
+        //regrouper les info du produit
+        $_SESSION['panier']=$tmp;
+        //se debarasser de l'info
+        unset($tmp);
+    }
+
+    else{
+        echo 'error';
+    }
+}
+
+function compter_produit(){
+    if(isset($_SESSION['panier'])){
+    
+        return count($_SESSION['panier']['nom']);
+    }
+    else{
+        return 0;
+    }
+}
+
+function calcul_montant_panier(){
+
+    $total = 0;
+    $i=0;
+
+    for($i; $i<count($_SESSION['panier']['nom']); $i++){
+        $total+= $_SESSION['panier']['quantite'][$i]*$_SESSION['panier']['prix'];
+
+    }
+
+    return $total;
+}
+
+function delete_panier(){
+    if(isset($_SESSION['panier'])){
+
+        unset($_SESSION['panier']);
+    }
+}
+
+
+
+
+
+
 //Fonctions GET
+    public function getidproduit(){
+        return $this->id;
+    }
+
+    public function getnomproduit(){
+        return $this->nom;
+    }
+
+    public function getprix(){
+        return $this->prix;
+    }
+
+    public function getstock(){
+        return $this->quantite;
+    }
+
+
+
+
 
     public function getid(){
         return $this->id;
