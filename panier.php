@@ -34,18 +34,9 @@ if(!isset($_SESSION['user'])){
 <main>
 
 <section class="panneau-jaune">
-<h1>Mon panier actuel</h1>
+<h1>Mon panier</h1>
 
-<form method="post" action="">
-    <table>
-        <tr>
-            <td>Nom du produit</td>
-            <td>Quantité</td>
-            <td>Prix unitaire</td>
-            <td>Action</td> 
-        </tr>
-        <?php 
-        
+<?php
         $_SESSION["user"]->creation_panier();
 
         if(isset($_GET['id']))
@@ -57,18 +48,38 @@ if(!isset($_SESSION['user'])){
 
             $_SESSION["user"]->add_product_panier($nom,$quantite,$prix_produit);
         }
+
+$nb_produit=count($_SESSION['panier']['quantite']);
+
+if($nb_produit <= 0){
+
+    echo 'Votre panier est vide !';
+}
+else{
+    ?>
+
+<form method="post" action="">
+    <table>
+    <thead>
+        <tr>
+            <td>Nom du produit</td>
+            <td>Quantité</td>
+            <td>Prix unitaire</td>
+            <td>Action</td> 
+        </tr>
+    </thead>
+    </tbody>
+        <?php 
+        
             $i=0; 
             $nb_produit=count($_SESSION['panier']['quantite']);
 
-            if($nb_produit <= 0){
 
-                echo 'Panier vide!';
-            }
-            else{
                 //tant que tu trouve des produits , ++
                 for($i=0 ; $i < $nb_produit; $i++){
 
                     ?>
+                
                     <tr>
                         <td><?php echo $_SESSION['panier']['nom'][$i];?></td> 
                         <td><input name="qt" value="<?php echo $_SESSION['panier']['quantite'][$i];?>"/></td> 
@@ -79,16 +90,17 @@ if(!isset($_SESSION['user'])){
 
                     <?php
                 }
-
-            }
         ?>
                     <tr>
                         <td colspan="3">Total : <?php echo calcul_montant_panier(); ?>€</td>
                     </tr>
+        </tbody>
     </table>
 </form>
-   
 
+<button name="panier"><a href="paiement.php">Valider le panier</a></button>
+
+            <?php } ?>   
 </section>
 
 </main>

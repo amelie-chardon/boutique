@@ -512,3 +512,18 @@ input[type="textarea"]
     text-align: center;
     margin:10px;
 }
+
+/*PAIEMENT*/
+.paiement
+{
+    background-color:white;
+    color:black;
+    align-items:left;
+    text-align: left;
+    margin:10px;
+}
+
+.paiement p
+{
+    width: 30vw;
+}

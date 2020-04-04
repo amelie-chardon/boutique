@@ -56,18 +56,67 @@ if(!isset($_SESSION['perm'])){
                     <input type="text" name="stock" required/><br>
                     <label>Prix : </label>
                     <input type="text" name="prix" required/><br>
+        <?php 
+        $_SESSION["bdd"]->connect();
+        $i=0;
+        $result=$_SESSION["bdd"]->execute("SELECT id , nom
+                                           FROM categories
+                                           ");
+                                           
+                                           
+                                           
+        ?>
+
                     <label>Catégorie(s) : </label>
                     <select name="categorie" required>
-                        <option value="Mariage" name="Mariage">Mariage</option>
-                        <option value="Anniv" name="Anniv">Anniversaire</option>
-                        <option value="Autre" name="Autre">Autre</option>
+                       
+                       <?php
+                       foreach($result as list($id,$nom)) {
+                        ?>
+
+                        <option value="<?php echo $nom ?>"><?php echo $nom ?></option>
+
+                        <?php
+                        
+                       }
+                       $i++
+                       
+                       ?>
+
                     </select></br>
+
+
+                    <?php 
+        $_SESSION["bdd"]->connect();
+        $i=0;
+        $result=$_SESSION["bdd"]->execute("SELECT id , nom
+                                           FROM sous_categories
+                                           ");
+                                           
+                                           
+        ?>
+
                     <label>Sous-Catégorie(s) : </label>
                     <select name="sous_categorie" required>
-                        <option value="Chocolat" name="ch">Chocolat</option>
-                        <option value="Fruit" name="fr">Fruit</option>
-                        <option value="Les_deux" name="les_2">Les deux</option>
-                    </select></br> 
+                       
+                    <?php
+                       foreach($result as list($id,$nom)) {
+                        ?>
+
+                        <option value="<?php echo $nom ?>"><?php echo $nom ?></option>
+
+                        <?php
+                        
+                       }
+                       $i++
+                       
+                       ?>
+
+
+                        
+                    </select></br>
+                    
+                    
                     <input type="submit" name="send_add_produit"/>
                     
 
@@ -86,8 +135,15 @@ if(!isset($_SESSION['perm'])){
     {
          
                     $connect = mysqli_connect("localhost", "root", "", "boutique");
-                    $requete = "INSERT INTO `produits` (`nom`, `description`, `prix`, `stock`, `categorie`, `sous_cat`) VALUES 
-                    ('$nom', '$description', '$prix', '$stock','$categorie','$sous_categorie')";
+                    $requete = "INSERT INTO `produits` (`nom`, `description`, `prix`, `stock`, `categorie`, `sous_cat`)
+                                VALUES ('$nom', '$description', '$prix', '$stock','$categorie','$sous_categorie')" AND
+                                //"INSERT INTO `categories_produits` (`id_produits`)
+                               // VALUES ('$categorie')";
+
+                            //Amélie au secours le sql va me tuer :D 
+
+
+                               
                     $query = mysqli_query($connect,$requete);
                     
                    echo "Article bien ajouté !";
