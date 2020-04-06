@@ -46,7 +46,7 @@ if(!isset($_SESSION['user'])){
             $quantite=$_GET["q"];
             $prix_produit=$_GET["p"];
 
-            $_SESSION["user"]->add_product_panier($nom,$quantite,$prix_produit);
+            $_SESSION["user"]->add_product_panier($id,$nom,$quantite,$prix_produit);
         }
 
 $nb_produit=count($_SESSION['panier']['quantite']);
@@ -54,8 +54,10 @@ $nb_produit=count($_SESSION['panier']['quantite']);
 if($nb_produit <= 0){
 
     echo 'Votre panier est vide !';
+    $_SESSION["user"]->delete_panier();
 }
 else{
+    var_dump($_SESSION["panier"]);
     ?>
 
 <form method="post" action="">
