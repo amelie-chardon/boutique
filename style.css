@@ -66,6 +66,18 @@ button[type="submit"]
     margin:5px;
 }
 
+article, article div
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+    padding:5px;
+
+}
+
 /*HEADER*/
 
 header
@@ -499,4 +511,19 @@ input[type="textarea"]
     align-items: center;
     text-align: center;
     margin:10px;
+}
+
+/*PAIEMENT*/
+.paiement
+{
+    background-color:white;
+    color:black;
+    align-items:left;
+    text-align: left;
+    margin:10px;
+}
+
+.paiement p
+{
+    width: 30vw;
 }

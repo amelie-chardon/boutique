@@ -18,7 +18,7 @@ if(!isset($_SESSION['user'])){
 ?>
 
 <head>
-        <title>Resultat</title> 
+        <title>Page produit</title> 
         <link rel="stylesheet" href="style.css">
         <link href="https://fonts.googleapis.com/css?family=Pathway+Gothic+One&display=swap" rel="stylesheet">
         <meta charset="UTF-8">
@@ -32,9 +32,8 @@ if(!isset($_SESSION['user'])){
 <main>
 
 <section class="panneau-jaune">
-   
 <?php 
-                        if ($_GET['id']){
+                        if ($_GET['id']==true){
 
                          
                             $id= $_GET['id'];
@@ -47,18 +46,33 @@ if(!isset($_SESSION['user'])){
                             
 
                             ?> 
+                    <section class="bloc">
+
                         <article class="fiche_produit">
                             
                             <h1><?php echo $data['nom']?></h1>
-                            <img id="produit_img" src="img/produit/<?php echo $data['id']?>.jpg" />
+                            <img id="produit_img" src="<?php echo $data['image']?>" />
                             <h2><?php echo $data['description']?></h2>
                             <p>Stock disponible : <?php echo $data['stock']?> </p>
                             <h2><?php echo $data['prix']?>€</h2>
+                            
+                            
                             <?php
                             if($data['stock']!=0){
                                 ?>
-                               <button> <a href="panier.php?action-ajout&amp;l-<?php echo $data['nom'];?>&amp;q-<?php echo $data['stock'];?>&amp;p-<?php echo $data['prix'];?>"> Ajouter au panier </a></button>
+                                
+                                <form method="GET" action="panier.php?action-ajout&amp;id=<?php echo $data['id'];?>&amp;l=<?php echo $data['nom'];?>&amp;q=<?php echo $_GET['q'];?>&amp;p=<?php echo $data['prix'];?>">
+                               
+                                <button type="submit" name="add">Add product(s)</button>
+                                </form>
+                                
+                               
                             <?php
+                            if(isset($_GET["add"])){
+                                if(["q"]<$data["stock"]){
+                                    
+                                }
+                            }
                             }
                             else{
                                 ?>
@@ -68,10 +82,40 @@ if(!isset($_SESSION['user'])){
                             ?>
                        
                         </article>
+                    </section>
+
+                    <section class="bloc_text">
 
                         <article class="zone_avis">
                             <div class="avis">
                             <h2>Les derniers avis</h2>
+
+
+                            <?php 
+                                   $id= $_GET['id'];
+                                   $connect = mysqli_connect('localhost', 'root', '','boutique');
+                                   $select="SELECT commentaire , note FROM `avis` where id_produits = $id";
+                                   $query= mysqli_query($connect,$select);
+                                   $data= mysqli_fetch_all($query);
+                                   foreach($data as list($commentaire,$note))
+                                   {
+                                               ?>
+                                               <article>
+                                                   
+                                                       <div class="avis&note">
+                                                           
+                                                           <p><?php echo $note; ?></p></br>
+                                                           <p><?php echo $commentaire; ?></p>
+                                                           
+                                                       </div>
+                                               </article>
+                                               <?php
+                   
+                                   }
+                                   
+                                 ?>
+                                
+
 
                             <?php 
                             
@@ -87,7 +131,7 @@ if(!isset($_SESSION['user'])){
                             <?php
                             $id = $_GET['id']
                             ?>
-                            <button><a href="laisser-avis?id=<?php echo $id; ?>">Page produit</a></button>
+                            <button><a href="laisser-avis?id_produits=<?php echo $id; ?>">Un avis sur le produit</a></button>
                             </div>
                                
                             <div class="zone_creation_avis">
@@ -95,6 +139,7 @@ if(!isset($_SESSION['user'])){
                             </div>
 
                         </article>
+                    </section>
 
                         <aside class="produit_similaire">
 

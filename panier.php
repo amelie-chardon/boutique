@@ -34,54 +34,76 @@ if(!isset($_SESSION['user'])){
 <main>
 
 <section class="panneau-jaune">
+<h1>Mon panier</h1>
+
+<?php
+        $_SESSION["user"]->creation_panier();
+
+        if(isset($_GET['id']))
+        {
+            $id=$_GET["id"];
+            $nom=$_GET["l"];
+            $quantite=$_GET["q"];
+            $prix_produit=$_GET["p"];
+
+            $_SESSION["user"]->add_product_panier($nom,$quantite,$prix_produit);
+        }
+
+$nb_produit=count($_SESSION['panier']['quantite']);
+
+if($nb_produit <= 0){
+
+    echo 'Votre panier est vide !';
+}
+else{
+    ?>
 
 <form method="post" action="">
     <table>
-        <tr>
-            <td>Mon panier actuel</td>
-        </tr>
+    <thead>
         <tr>
             <td>Nom du produit</td>
-            <td>Prix unitaire</td>
             <td>Quantité</td>
+            <td>Prix unitaire</td>
             <td>Action</td> 
         </tr>
+    </thead>
+    </tbody>
         <?php 
-             
-             $_SESSION["user"]->creation_panier();
-             
-             $_SESSION["user"]->add_product_panier($nom,$quantite,$prix_produit);
+        
             $i=0; 
             $nb_produit=count($_SESSION['panier']['quantite']);
-            var_dump($nb_produit);
-            if($nb_produit <= 0){
 
-                echo 'Panier vide!';
-            }
-            else{
+
                 //tant que tu trouve des produits , ++
                 for($i=0 ; $i < $nb_produit; $i++){
 
                     ?>
+                
                     <tr>
-                      <td><?php echo $_SESSION['panier']['nom'][$i];?></td> 
-                      <td><input name="qt" value="<?php echo $_SESSION['panier']['quantite'][$i];?>"/></td> 
-                      <td><?php echo $_SESSION['panier']['prix'][$i];?></td> 
-
+                        <td><?php echo $_SESSION['panier']['nom'][$i];?></td> 
+                        
+                        <td><input name="qt" value="<?php echo $_SESSION['panier']['quantite'][$i];?>"/></td> 
+                        <td><?php echo $_SESSION['panier']['prix'][$i];?>€</td> 
+                        <td></td>
                     </tr>
 
-                    <tr>
-                        <td>Total : <?php echo calcul_montant_panier() ?></td>
-                    </tr>
+
                     <?php
                 }
-
-            }
         ?>
+
+                    <tr>
+                        <td colspan="3">Total : <?php echo calcul_montant_panier(); ?>€</td>
+                    </tr>
+        </tbody>
     </table>
 </form>
-   
 
+<button name="panier"><a href="paiement.php">Valider le panier</a></button>
+
+
+            <?php } ?>   
 </section>
 
 </main>

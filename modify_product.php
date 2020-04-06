@@ -37,19 +37,18 @@ if(!isset($_SESSION['perm'])){
 </head>
 
     <body>
+    <?php require 'include/header.php'?>
+
         <main>
 
-            <?php require 'include/header.php'?>
-
-            
-                <h1>Administration</h1>
-
                     <section class="panneau">
+                    <h1>Administration</h1>
+
                       <div class="gestion_produit"> 
-                
+                        <article>
                         <h2>Modération de Produit</h2>
                         <?php 
-                        if ($_GET['id']==true){
+                        if ($_GET['id']){
                          
                             $id= $_GET['id'];
                             $connect = mysqli_connect('localhost', 'root', '','boutique');
@@ -64,119 +63,165 @@ if(!isset($_SESSION['perm'])){
     
                 <form action="" method="POST">
 
-                    
-                    <label>Nom : </label>
-                    <input type="text" name="nom" value="<?php echo  $data['nom']; ?>"/><br>
-                    <label>Description :</label>
-                    <input type="text" name="description" value="<?php echo  $data['description']; ?>"/><br>
-                    <label>Stock : </label>
-                    <input type="text" name="stock" value="<?php echo  $data['stock']; ?>"/><br>
-                    <label>Prix : </label>
-                    <input type="text" name="prix" value="<?php echo  $data['prix']; ?>"/><br>
-               
-                    <label>Catégorie(s) : </label>
-                    <select name="categorie">
-                <option value="Mariage" name="Mariage">Mariage</option>
-                <option value="Anniv" name="Anniv">Anniversaire</option>
-                <option value="Autre" name="Autre">Autre</option>
-                    </select></br>
-                    <label>Sous-Catégorie(s) : </label>
-                    <select name="sous_categorie">
-                <option value="Chocolat" name="ch">Chocolat</option>
-                <option value="Fruit" name="fr">Fruit</option>
-                <option value="Les_deux" name="les_2">Les deux</option>
-                    </select></br> 
+                        
+                        <label>Nom : </label>
+                        <input type="text" name="nom" value="<?php echo  $data['nom']; ?>"/><br>
+                        <label>Description :</label>
+                        <input type="text" name="description" value="<?php echo  $data['description']; ?>"/><br>
+                        <label>Stock : </label>
+                        <input type="text" name="stock" value="<?php echo  $data['stock']; ?>"/><br>
+                        <label>Prix : </label>
+                        <input type="text" name="prix" value="<?php echo  $data['prix']; ?>"/><br>
                 
-                   
-                    <input type="submit" name="mod_prod"/>
-                    
-
-
-                    
-                    <?php
+                        <input type="submit" name="mod_prod"/>
+                </form> 
+            </article>
+                        <?php
                         }
                         else{
-                            header('Location:admin.php');
+                            echo "Produit non trouvé";
                         }?>
-                        
-                       <?php if(isset($_POST['mod_prod'])){
-        
-        
-        
-        $nom= $_POST['nom'];
-        $description=$_POST['description'];
-        $stock=$_POST['stock'];
-        $prix=$_POST['prix'];
-        $categorie=$_POST['categorie'];
-        $sous_categorie=$_POST['sous_categorie'];
 
 
-        $id=$_GET['id'];
-        $connexion = mysqli_connect('Localhost', 'root', '', 'boutique');
-        $update_pp ="UPDATE `produits` SET `nom` = '".$_POST['nom']."', `description` = '".$_POST['description']."', `prix` = '".$_POST['prix']."', `stock` = '".$_POST['stock']."', `categorie` = '".$_POST['categorie']."', `sous_cat` = '".$_POST['sous_categorie']."' WHERE produits.id = $id";
-
-        $query= mysqli_query($connexion,$update_pp);
-
-        header ("location:modify_product?id=". $_GET["id"]);
+            <?php if(isset($_POST['mod_prod']))
+            {
         
-}
+
+            $id=$_GET['id'];
+            $connexion = mysqli_connect('Localhost', 'root', '', 'boutique');
+            $update_produit ="UPDATE `produits` 
+                        SET `nom` = '".$_POST['nom']."', `description` = '".$_POST['description']."', `prix` = '".$_POST['prix']."',
+                        `stock` = '".$_POST['stock']."'
+                        WHERE produits.id= $id";
+
+            $query= mysqli_query($connexion,$update_produit);
+
+            header ("location:modify_product?id=". $_GET["id"]);
+            }
 ?>
+
+
+<!--Partie mod cat & sous cat-->
+                    <article class="">
+                        <form method="POST" action="">
+
+                        <?php 
+        
+                        $_SESSION["user"]->pop_list_cat(); 
+
+                         ?>
+                            <input name="mod_cat" type="submit"/>
+                        
+                    </article>
+                    <?php if(isset($_POST['mod_cat']))
+            {
+        
+
+            $id=$_GET['id'];
+            $cat=$_POST["cat"];
+            //mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+            $connexion = mysqli_connect('Localhost', 'root', '', 'boutique');
+            $update_cat ="UPDATE `categories_produits` SET `id_categories` = $cat WHERE  `categories_produits`.`id_produits` = $id";
+            $query= mysqli_query($connexion,$update_cat);
+            var_dump($update_cat);
+            var_dump($query);
+            
+            echo "yes!";
+            
+            }
+            
+?>
+
+
+<!--Partie mod cat & sous cat-->
+<article class="">
+                        <form method="POST" action="">
+
+                        <?php 
+        
+                        $_SESSION["user"]->pop_list_sous_cat(); 
+                        
+                         ?>
+                            <input name="mod_sous_cat" type="submit"/>
+                        
+                    </article>
+                    <?php if(isset($_POST['mod_sous_cat']))
+            {
+        
+
+            $id=$_GET['id'];
+            $cat=$_POST["sous_categorie"];
+            //mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+            $connexion = mysqli_connect('Localhost', 'root', '', 'boutique');
+            $update_cat ="UPDATE `sous_categories_produits` SET `id_sous_categories` = $cat WHERE  `sous_categories_produits`.`id_produits` = $id";
+            $query= mysqli_query($connexion,$update_cat);
+            var_dump($update_cat);
+            var_dump($query);
+            
+            echo "yes!";
+            
+            }
+            
+?>
+                   
+                        
+                       
+                    
+
+
                         <article>
                         <h2>Upload photo du produit</h2>
-                        <img src="img/produit/<?php echo $_GET['id']?>.jpg" />
-                        <form action="modify_product.php" method="post" enctype="multipart/form-data">
+                        <img class="produit_img_table" src="<?php echo $data['image']; ?>" />
+                        <form action="" method="POST" enctype="multipart/form-data">
                         <input type="file" name="avatar"/>
                         
                         <input type="submit" name="valider">
                         
-                        </form> 
+                        
                         <?php
-                if(isset($_POST['valider'])){
-
-                
+    
+            if(isset($_POST['valider'])){
                 if(isset($_FILES['avatar'])) {
                     $tailleMax = 3145728;
                     $extensionsValides = array('jpg');
                     if($_FILES['avatar']['size'] <= $tailleMax)
                      {
                        $extensionUpload = strtolower(substr(strrchr($_FILES['avatar']['name'], '.'), 1));
-                       
                        if(in_array($extensionUpload, $extensionsValides)) {
                         $id = $_GET['id'];
                           $chemin = "img/produit/".$id.".".$extensionUpload;
-                          
+                          echo $chemin;
                           $resultat = move_uploaded_file($_FILES['avatar']['tmp_name'], $chemin);
                           if($resultat) {
                              
                              $connexion = mysqli_connect('Localhost', 'root', '', 'boutique');
-                             var_dump($connexion);
                              $update_pp ="UPDATE produits SET image = '$chemin' WHERE id = '$id'";
                              $query= mysqli_query($connexion,$update_pp);
                              
                              echo "Image produit bien mis à jour !";
 
                           } else {
-                             $msg = "Erreur durant l'importation de votre photo de profil";
+                             echo "Erreur durant l'importation de votre photo de profil";
                           }
                        } else {
-                          $msg = "Votre photo de profil doit être au format jpg";
+                          echo "Votre photo de profil doit être au format jpg";
                        }
                     } else {
-                       $msg = "Votre photo de profil ne doit pas dépasser 3Mo";
+                       echo "Votre photo de profil ne doit pas dépasser 3Mo";
                     }
-                 }
+                }
                  
                 }
                 ?>
-
+</form> 
                         </article>
                        
 
                     </section>
 
-                <?php require 'include/footer.php'?>
 
         </main>
+        <?php require 'include/footer.php'?>
 
 
     </body>

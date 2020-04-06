@@ -189,6 +189,7 @@ if(!isset($_SESSION['perm'])){
                 {
                     $categories=$_SESSION["bdd"]->execute("SELECT Produits.id, categories.nom FROM produits RIGHT JOIN categories_produits ON produits.id=categories_produits.id_produits RIGHT JOIN categories ON categories_produits.id_categories=categories.id WHERE produits.id=$id");
                     $sous_categories=$_SESSION["bdd"]->execute("SELECT Produits.id, sous_categories.nom FROM produits RIGHT JOIN sous_categories_produits ON produits.id=sous_categories_produits.id_produits RIGHT JOIN sous_categories ON sous_categories_produits.id_sous_categories=sous_categories.id WHERE produits.id=$id");
+                    var_dump($sous_categories);
 
                         ?>
                             <tr>
