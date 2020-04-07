@@ -57,7 +57,6 @@ if($nb_produit <= 0){
     $_SESSION["user"]->delete_panier();
 }
 else{
-    var_dump($_SESSION["panier"]);
     ?>
 
 <form method="post" action="">
@@ -96,9 +95,14 @@ else{
                     <tr>
                         <td colspan="3">Total : <?php echo calcul_montant_panier(); ?>€</td>
                     </tr>
+
+                    
         </tbody>
     </table>
 </form>
+
+<!--Attention fonction delete_panier qui s'execute sans condition -> suppression automatique panier -->
+<button <?php //delete_panier() ?>> <a href="profil.php"> Delete panier</a></button>
 
 <button name="panier"><a href="paiement.php">Valider le panier</a></button>
 

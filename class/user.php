@@ -443,7 +443,101 @@ function delete_panier(){
     }
 }
 
+function pop_list_cat(){
+    $_SESSION["bdd"]->connect();
+        $i=0;
+        $result=$_SESSION["bdd"]->execute("SELECT id , nom
+                                           FROM categories
+                                           ");
+                                           
+                                           
+                                           
+        ?>
 
+                    <label>Catégorie(s) : </label>
+                    <select name="cat">
+                       
+                       <?php
+                       foreach($result as list($id,$nom)) {
+                        ?>
+
+                        <option value="<?php echo $id ?>"><?php echo $nom ?></option>
+
+                        <?php
+                        
+                       }
+                       $i++
+                       
+                       ?>
+
+                    </select></br>
+   
+                    <?php
+}
+
+function pop_list_sous_cat(){
+    $_SESSION["bdd"]->connect();
+    $i=0;
+    $result=$_SESSION["bdd"]->execute("SELECT id , nom
+                                       FROM sous_categories
+                                       ");
+                                       
+                                       
+    ?>
+
+                <label>Sous-Catégorie(s) : </label>
+                <select name="sous_categorie">
+                   
+                <?php
+                   foreach($result as list($id,$nom)) {
+                    ?>
+
+                    <option value="<?php echo $id ?>"><?php echo $nom ?></option>
+
+                    <?php
+                    
+                   }
+                   $i++
+                   
+                   ?>
+
+
+                    
+                </select></br>
+                <?php
+}
+
+function quantite(){
+    $_SESSION["bdd"]->connect();
+    $i=0;
+    $result=$_SESSION["bdd"]->execute("SELECT stock
+                                       FROM produits
+                                       ");
+                                       
+                                       
+    ?>
+
+                <label>Sous-Catégorie(s) : </label>
+                <select name="sous_categorie">
+                   
+                <?php
+                   while($i<$result) {
+                    ?>
+
+                    <option value="<?php echo $i++ ?>"><?php echo $i++ ?></option>
+
+                    <?php
+                    
+                   }
+                   
+                   
+                   ?>
+
+
+                    
+                </select></br>
+                <?php
+}
 
 
 

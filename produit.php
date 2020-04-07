@@ -49,25 +49,38 @@ if(!isset($_SESSION['user'])){
                     <section class="bloc">
 
                         <article class="fiche_produit">
-                            
-                            <h1><?php echo $data['nom']?></h1>
+                        <h1><?php echo $data['nom']?></h1>
                             <img id="produit_img" src="<?php echo $data['image']?>" />
                             <h2><?php echo $data['description']?></h2>
                             <p>Stock disponible : <?php echo $data['stock']?> </p>
                             <h2><?php echo $data['prix']?>€</h2>
-                            <?php
+                            
+                            
+                        <?php
                             if($data['stock']!=0){
                                 ?>
-                               <button> <a href="panier.php?action-ajout&amp;id=<?php echo $data['id'];?>&amp;l=<?php echo $data['nom'];?>&amp;q=<?php echo $data['stock'];?>&amp;p=<?php echo $data['prix'];?>"> Ajouter au panier (+1)</a></button>
-                            <?php
+                                <form method="POST">
+                                    <input type="number" min="1" max="<?php echo $data['stock']; ?>" step="1" name="q">
+                                    <input type="submit" name="send_qte">
+                                </form>
+                            <?php   
                             }
                             else{
                                 ?>
-                                <p>En cours de réapro</p>
+                                <p>En cours de réapprovisionnement</p>
                             <?php
                             }
+                            
+                            if(isset($_POST["send_qte"]))
+                            {
+                                $quantite=$_POST["q"];
+                                $nom=$data["nom"];
+                                $id=strval($data["id"]);
+                                $stock=$data["stock"];
+                                $prix=$data["prix"];
+                                header("location:panier.php?action-ajout&id=$id&l=$nom&s=$stock&q=$quantite&p=$prix");
+                            }
                             ?>
-                       
                         </article>
                     </section>
 
@@ -76,14 +89,29 @@ if(!isset($_SESSION['user'])){
                         <article class="zone_avis">
                             <div class="avis">
                             <h2>Les derniers avis</h2>
-
+                            <article>
+                                <div class="avis&note">
                             <?php 
-                            
-
+                                   $id= $_GET['id_produits'];
+                                   $connect = mysqli_connect('localhost', 'root', '','boutique');
+                                   $select="SELECT commentaire , note FROM `avis` where id_produits = $id";
+                                   $query= mysqli_query($connect,$select);
+                                   $data= mysqli_fetch_all($query);
+                                   foreach($data as list($commentaire,$note))
+                                   {
+                                               ?>
+                                    <p><?php echo $note; ?>/5 : <?php echo $commentaire; ?></p>
+                                <?php
+                                   }
+                                   
+                                 ?>
+                                </div>
+                            </article>
+                            <?php 
                         }
                         else
                         {
-                            echo 'produit pas trouver';
+                            echo 'Produit pas trouvé';
                         }
                             ?>
                            
@@ -91,7 +119,7 @@ if(!isset($_SESSION['user'])){
                             <?php
                             $id = $_GET['id_produits']
                             ?>
-                            <button><a href="laisser-avis?id_produits=<?php echo $id; ?>">Page produit</a></button>
+                            <button><a href="laisser-avis?id_produits=<?php echo $id; ?>">Poster un commentaire</a></button>
                             </div>
                                
                             <div class="zone_creation_avis">
