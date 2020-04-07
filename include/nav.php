@@ -10,6 +10,7 @@ if (isset($_SESSION['login']))
     <ul>
         <li><a href="index.php">Accueil</a></li>
         <li><a href="profil.php">Mon compte</a></li>
+        <li><a href="panier.php">Mon panier</a></li>
         
         <?php 
         if(isset($_SESSION['perm'])){

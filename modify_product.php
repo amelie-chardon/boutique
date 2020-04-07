@@ -145,6 +145,7 @@ if(!isset($_SESSION['perm'])){
                             <input name="mod_sous_cat" type="submit"/>
                         
                     </article>
+                    
                     <?php if(isset($_POST['mod_sous_cat']))
             {
         
@@ -162,9 +163,10 @@ if(!isset($_SESSION['perm'])){
             
             }
             
+            
 ?>
                    
-                        
+        </form>                     
                        
                     
 
@@ -227,4 +229,3 @@ if(!isset($_SESSION['perm'])){
     </body>
 
 </html>
-

@@ -87,7 +87,7 @@ public function connect()
         ?>
             <article class="bloc_produit">
                 <h3><?php echo $nom; ?></h3>
-                <a href="produit.php?id=<?php echo $id; ?>">
+                <a href="produit.php?id_produits=<?php echo $id; ?>">
                     <img class="produit_img" src="<?php echo $image; ?>">
                 </a>
                 <p><?php echo $prix; ?> €</p>

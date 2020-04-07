@@ -33,10 +33,10 @@ if(!isset($_SESSION['user'])){
 
 <section class="panneau-jaune">
 <?php 
-                        if ($_GET['id']==true){
+                        if ($_GET['id_produits']){
 
                          
-                            $id= $_GET['id'];
+                            $id= $_GET['id_produits'];
                             $connect = mysqli_connect('localhost', 'root', '','boutique');
                             $select="SELECT *
                                      FROM produits
@@ -49,30 +49,18 @@ if(!isset($_SESSION['user'])){
                     <section class="bloc">
 
                         <article class="fiche_produit">
-                            
-                            <h1><?php echo $data['nom']?></h1>
+                        <h1><?php echo $data['nom']?></h1>
                             <img id="produit_img" src="<?php echo $data['image']?>" />
                             <h2><?php echo $data['description']?></h2>
                             <p>Stock disponible : <?php echo $data['stock']?> </p>
                             <h2><?php echo $data['prix']?>€</h2>
                             
                             
-                            <?php
+                        <?php
                             if($data['stock']!=0){
                                 ?>
-                                
-                                <form method="GET" action="panier.php?action-ajout&amp;id=<?php echo $data['id'];?>&amp;l=<?php echo $data['nom'];?>&amp;q=<?php echo $_GET['q'];?>&amp;p=<?php echo $data['prix'];?>">
-                               
-                                <button type="submit" name="add">Add product(s)</button>
-                                </form>
-                                
-                               
+                               <button> <a href="panier.php?action-ajout&amp;id=<?php echo $data['id'];?>&amp;l=<?php echo $data['nom'];?>&amp;q=<?php echo $data['stock'];?>&amp;p=<?php echo $data['prix'];?>"> Ajouter au panier (+1)</a></button>
                             <?php
-                            if(isset($_GET["add"])){
-                                if(["q"]<$data["stock"]){
-                                    
-                                }
-                            }
                             }
                             else{
                                 ?>
@@ -89,10 +77,8 @@ if(!isset($_SESSION['user'])){
                         <article class="zone_avis">
                             <div class="avis">
                             <h2>Les derniers avis</h2>
-
-
                             <?php 
-                                   $id= $_GET['id'];
+                                   $id= $_GET['id_produits'];
                                    $connect = mysqli_connect('localhost', 'root', '','boutique');
                                    $select="SELECT commentaire , note FROM `avis` where id_produits = $id";
                                    $query= mysqli_query($connect,$select);
@@ -114,9 +100,6 @@ if(!isset($_SESSION['user'])){
                                    }
                                    
                                  ?>
-                                
-
-
                             <?php 
                             
 
@@ -129,9 +112,9 @@ if(!isset($_SESSION['user'])){
                            
                             <h2>Vous souhaitez laisser un avis</h2>
                             <?php
-                            $id = $_GET['id']
+                            $id = $_GET['id_produits']
                             ?>
-                            <button><a href="laisser-avis?id_produits=<?php echo $id; ?>">Un avis sur le produit</a></button>
+                            <button><a href="laisser-avis?id_produits=<?php echo $id; ?>">Poster un commentaire</a></button>
                             </div>
                                
                             <div class="zone_creation_avis">

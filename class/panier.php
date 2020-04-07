@@ -12,26 +12,28 @@ class panier extends user{
             
             $_SESSION['panier']=array();
             $_SESSION['panier']['id_produits']=array();
-            $_SESSION['panier']['id_achats']=array();
+            $_SESSION['panier']['nom']=array();
             $_SESSION['panier']['quantite']=array();
             $_SESSION['panier']['prix']=array();
         }
         return true;
     }
 
-    function add_product_panier($id_produit,$id_achats,$quantite,$prix_produit){
+    function add_product_panier($id_produit,$nom,$quantite,$prix_produit){
         if(creation_panier()){
-            
 
             $position_produit=array_search($id_produit,$_SESSION['panier']['id_produits']);
             if($position_produit!== false){
                 //$position_produit-1 car produits.id commence à 1 mais l'indice des array commence à 0
                 $_SESSION['panier']['id_produits'][$position_produit-1]+= $quantite;
-                var_dump($_SESSION['panier']['id_produits']);
             }
             else {
+                $_SESSION["bdd"]->connect();
+                //$requete=$_SESSION["bdd"]->execute("SELECT nom FROM produits WHERE id=$id_produit");
+                //$nom=$requete[0][0];
 
                 array_push($_SESSION['panier']['id_produits'],$id_produit);
+                array_push($_SESSION['panier']['nom'],$nom);
                 array_push($_SESSION['panier']['quantite'],$quantite);
                 array_push($_SESSION['panier']['prix'],$prix_produit);
             }
@@ -72,7 +74,7 @@ class panier extends user{
             $i=0;
             $tmp =array();
             $tmp['id_produits']=array();
-            $tmp['id_achats']=array();
+            $tmp['nom']=array();
             $tmp['quantite']=array();
             $tmp['prix']=array();
 
@@ -81,6 +83,7 @@ class panier extends user{
                 if($_SESSION['panier']['id_produits'][$i] !== $id_produit){
                 
                 array_push($_SESSION['panier']['id_produits'],$_SESSION['panier']['id_produits'][$i]);
+                array_push($_SESSION['panier']['nom'],$_SESSION['panier']['nom'][$i]);
                 array_push($_SESSION['panier']['quantite'],$_SESSION['panier']['quantite'][$i]);
                 array_push($_SESSION['panier']['prix'],$_SESSION['panier']['prix'][$i]);
                 }

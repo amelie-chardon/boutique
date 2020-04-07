@@ -51,7 +51,7 @@ if(!isset($_SESSION['perm'])){
                         
 
                     <form method="post" action="">
-                    <label>Etes vous sûre de vouloir supprimer la categorie de votre BDD ?</label>
+                    <label>Etes vous sûre de vouloir supprimer ce produit de votre BDD ?</label>
                     <input type="submit" name ="suppr_cat" value="Delete"/>
                     
 <?php 

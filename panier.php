@@ -46,7 +46,7 @@ if(!isset($_SESSION['user'])){
             $quantite=$_GET["q"];
             $prix_produit=$_GET["p"];
 
-            $_SESSION["user"]->add_product_panier($nom,$quantite,$prix_produit);
+            $_SESSION["user"]->add_product_panier($id,$nom,$quantite,$prix_produit);
         }
 
 $nb_produit=count($_SESSION['panier']['quantite']);
@@ -54,8 +54,10 @@ $nb_produit=count($_SESSION['panier']['quantite']);
 if($nb_produit <= 0){
 
     echo 'Votre panier est vide !';
+    $_SESSION["user"]->delete_panier();
 }
 else{
+    var_dump($_SESSION["panier"]);
     ?>
 
 <form method="post" action="">
@@ -82,7 +84,6 @@ else{
                 
                     <tr>
                         <td><?php echo $_SESSION['panier']['nom'][$i];?></td> 
-                        
                         <td><input name="qt" value="<?php echo $_SESSION['panier']['quantite'][$i];?>"/></td> 
                         <td><?php echo $_SESSION['panier']['prix'][$i];?>€</td> 
                         <td></td>
@@ -92,16 +93,19 @@ else{
                     <?php
                 }
         ?>
-
                     <tr>
                         <td colspan="3">Total : <?php echo calcul_montant_panier(); ?>€</td>
                     </tr>
+
+                    
         </tbody>
     </table>
 </form>
 
-<button name="panier"><a href="paiement.php">Valider le panier</a></button>
+<?php var_dump($_SESSION['panier']); ?>
+<button <?php delete_panier() ?>> <a href="profil.php"> Delete panier</a></button>
 
+<button name="panier"><a href="paiement.php">Valider le panier</a></button>
 
             <?php } ?>   
 </section>
