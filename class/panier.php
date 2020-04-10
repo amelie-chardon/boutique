@@ -21,12 +21,14 @@ class panier extends user{
 
     function add_product_panier($id_produit,$nom,$quantite,$prix_produit){
         if(creation_panier()){
+            if($id_produit==false){
 
             $position_produit=array_search($id_produit,$_SESSION['panier']['id_produits']);
             if($position_produit!== false){
                 //$position_produit-1 car produits.id commence à 1 mais l'indice des array commence à 0
                 $_SESSION['panier']['id_produits'][$position_produit-1]+= $quantite;
             }
+        }
             else {
                 $_SESSION["bdd"]->connect();
                 //$requete=$_SESSION["bdd"]->execute("SELECT nom FROM produits WHERE id=$id_produit");
@@ -54,6 +56,7 @@ class panier extends user{
                 //si il le trouve la position
                 if($position_produit!==false){
                     //
+                    $i=0;
                     $_SESSION['panier']['id_produits'][$position_produit]=$quantite;
                 }
             }

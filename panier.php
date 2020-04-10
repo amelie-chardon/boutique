@@ -57,10 +57,9 @@ if($nb_produit <= 0){
     $_SESSION["user"]->delete_panier();
 }
 else{
-    var_dump($_SESSION["panier"]);
     ?>
 
-<form method="post" action="">
+<form method="POST" action="">
     <table>
     <thead>
         <tr>
@@ -79,12 +78,26 @@ else{
 
                 //tant que tu trouve des produits , ++
                 for($i=0 ; $i < $nb_produit; $i++){
-
+                    
                     ?>
                 
                     <tr>
                         <td><?php echo $_SESSION['panier']['nom'][$i];?></td> 
-                        <td><input name="qt" value="<?php echo $_SESSION['panier']['quantite'][$i];?>"/></td> 
+                        <?php $pn_qt=$_SESSION['panier']['quantite'][$i];
+                         $pn_id_pr=$_SESSION['panier']['id_produits'][$i];
+                       ?>
+                        <td><input name="qt" value="<?php echo $pn_qt;?>"/>
+                        <input type="submit" name="qt_<?php echo $pn_id_pr?>"/></td>
+                        <?php
+                         $pn_qt=$_SESSION['panier']['quantite'][$i];
+                         $pn_id_pr=$_SESSION['panier']['id_produits'][$i];
+                       
+                        if(isset($_POST["qt_"."$pn_id_pr"])){
+                            $n_qt=$_POST["qt"];
+                            $id_produit=$_SESSION['panier']['id_produits'];
+                            $_SESSION["user"]->modify_quantity_product($id_produit,$quantite);
+                        }
+                        ?>
                         <td><?php echo $_SESSION['panier']['prix'][$i];?>€</td> 
                         <td></td>
                     </tr>
@@ -102,8 +115,18 @@ else{
     </table>
 </form>
 
-<?php var_dump($_SESSION['panier']); ?>
-<button <?php delete_panier() ?>> <a href="profil.php"> Delete panier</a></button>
+<!--Attention fonction delete_panier qui s'execute sans condition -> suppression automatique panier -->
+<form method="POST" action="">
+<input type="submit" name="delete_panier" value="Delete">
+</form>
+<?php
+if(isset($_POST["delete_panier"])){
+    $_SESSION["user"]->delete_panier();
+}
+
+?>
+
+
 
 <button name="panier"><a href="paiement.php">Valider le panier</a></button>
 

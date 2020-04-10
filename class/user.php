@@ -258,6 +258,10 @@ public function profil($confmdp,$login = "",$mail= "",$mdp = ""){
     }
 
 
+
+
+
+
     
     public function avis_produits($commentaire,$note){
         $id_produits=$_GET["id_produits"];
@@ -321,7 +325,10 @@ public function profil($confmdp,$login = "",$mail= "",$mdp = ""){
 
     }
 
+
+
 //PANIER FUNCTION
+
 
 function creation_panier(){
     if(!isset($_SESSION['panier'])){
@@ -331,6 +338,7 @@ function creation_panier(){
         $_SESSION['panier']['nom']=array();
         $_SESSION['panier']['quantite']=array();
         $_SESSION['panier']['prix']=array();
+        $_SESSION['panier']['stock']=array();
 
     }
     return true;
@@ -338,12 +346,14 @@ function creation_panier(){
 
 function add_product_panier($id_produit,$nom,$quantite,$prix_produit){
     if(creation_panier()){
+        
 
         $position_produit=array_search($id_produit,$_SESSION['panier']['id_produits']);
         if($position_produit!== false){
             //$position_produit-1 car produits.id commence à 1 mais l'indice des array commence à 0
-            $_SESSION['panier']['id_produits'][$position_produit-1]+= $quantite;
+            $_SESSION['panier']['id_produits'][$position_produit]= $quantite;
         }
+    
         else {
             $_SESSION["bdd"]->connect();
 
@@ -369,7 +379,8 @@ function modify_quantity_product($id_produit,$quantite){
             //si il le trouve la position
             if($position_produit!==false){
                 //
-                $_SESSION['panier']['id_produits'][$position_produit]=$quantite;
+                $_SESSION['panier']['id_produits'][$position_produit]=$quantite[+1];
+                header('location:panier.php');
             }
         }
         //quantité d'article inferieur à 0 d'un article
@@ -440,6 +451,8 @@ function delete_panier(){
     if(isset($_SESSION['panier'])){
 
         unset($_SESSION['panier']);
+        header('location:index.php');
+        
     }
 }
 
