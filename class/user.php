@@ -11,11 +11,6 @@ class user extends bdd{
     private $quantite = NULL;
     
 
-
-    
-    
-
-
 //Fonctions inscription/connexion/déconnexion/désinscription/est connecté
 
     public function inscription($login,$mdp,$confmdp,$mail){
@@ -222,7 +217,14 @@ public function profil($confmdp,$login = "",$mail= "",$mdp = ""){
         $id_achats=$_GET["id_achats"];
 
         $this->connect();
-        $fetch=$this->execute("SELECT produits.id,produits.nom, panier.quantite,produits.prix, produits.image, achats.prix FROM panier RIGHT JOIN produits ON panier.id_produits=produits.id RIGHT JOIN achats ON achats.id=panier.id_achats WHERE id_achats=$id_achats");
+        $fetch=$this->execute("SELECT achats.id_utilisateurs, produits.id,produits.nom, panier.quantite,produits.prix, produits.image, achats.prix FROM panier RIGHT JOIN produits ON panier.id_produits=produits.id RIGHT JOIN achats ON achats.id=panier.id_achats WHERE id_achats=$id_achats");
+        //On vérifie que la commande correspond à l'utilisateur connecté
+        if($fetch[0][0]!==$id_achats)
+        {
+            header("location:index.php");
+        }
+        else
+        {
         ?>
             <table class="actions">
                 <tbody>
@@ -234,7 +236,7 @@ public function profil($confmdp,$login = "",$mail= "",$mdp = ""){
                         <th></th>
                     </tr>
         <?php
-       foreach($fetch as list($id_produit,$nom,$quantite,$prix_u,$image,$prix_total))
+       foreach($fetch as list($id_utilisateur,$id_produit,$nom,$quantite,$prix_u,$image,$prix_total))
        {
             ?>
                     <tr>
@@ -254,11 +256,10 @@ public function profil($confmdp,$login = "",$mail= "",$mdp = ""){
                     </tr>
                 </tbody> 
             </table>
-    <?php
-    }
+        <?php
+        }
+}
 
-
-    
     public function avis_produits($commentaire,$note){
         $id_produits=$_GET["id_produits"];
         $id_utilisateurs=$this->id;
@@ -302,24 +303,8 @@ public function profil($confmdp,$login = "",$mail= "",$mdp = ""){
             <img src="img/profil/<?php echo $_GET['id']?>.jpg" />
             <?php
          }
-         
-
     }
 
-    public function search(){
-        $i=0;
-        $search=$_POST["search"];
-
-        $this->connect();
-        $request = "SELECT *
-                    FROM produits 
-                    LIKE '%$search%";
-        $query = mysqli_query($this->connect,$request);
-        $fetch =mysqli_fetch_all($query);
-
-
-
-    }
 
 //PANIER FUNCTION
 
@@ -331,19 +316,18 @@ function creation_panier(){
         $_SESSION['panier']['nom']=array();
         $_SESSION['panier']['quantite']=array();
         $_SESSION['panier']['prix']=array();
-
     }
     return true;
 }
 
 function add_product_panier($id_produit,$nom,$quantite,$prix_produit){
-    if(creation_panier()){
-
-        $position_produit=array_search($id_produit,$_SESSION['panier']['id_produits']);
+    if($this->creation_panier()){
+                $position_produit=array_search($id_produit,$_SESSION['panier']['id_produits']);
         if($position_produit!== false){
             //$position_produit-1 car produits.id commence à 1 mais l'indice des array commence à 0
-            $_SESSION['panier']['id_produits'][$position_produit-1]+= $quantite;
+            $_SESSION['panier']['quantite'][$position_produit]= $quantite;
         }
+    
         else {
             $_SESSION["bdd"]->connect();
 
@@ -361,30 +345,35 @@ function add_product_panier($id_produit,$nom,$quantite,$prix_produit){
 }
 
 function modify_quantity_product($id_produit,$quantite){
-    if(creation_panier()){
-        //si la quantité d'un article dans le panier est sup à 0 
-        if($quantite>0){
-            //recherche la position du produit dans le panier
-            $position_produit=array_search($_SESSION['panier']['id_produits'],$id_produit);
-            //si il le trouve la position
-            if($position_produit!==false){
-                //
-                $_SESSION['panier']['id_produits'][$position_produit]=$quantite;
+    if($this->creation_panier()){
+        //Si la valeur est un entier
+        if(is_int($quantite))
+        {
+            //si la quantité d'un article dans le panier est sup à 0 
+            if($quantite>0){
+                //recherche la position du produit dans le panier
+                $position_produit=array_search($id_produit,$_SESSION['panier']['id_produits']);
+                //si il le trouve la position
+                if($position_produit!==false){
+                    $_SESSION['panier']['quantite'][$position_produit]=strval(intval($quantite));
+                    header('location:panier.php');
+                }
+            }
+            //quantité d'article inferieur à 0 d'un article
+            else{
+            $this->delete_product_panier($id_produit);
+            header('location:panier.php');
             }
         }
-        //quantité d'article inferieur à 0 d'un article
         else{
-           delete_product_panier($id_produit);
+            echo 'erreur';
         }
-    }
-    else{
-        echo 'erreur';
     }
 
 }
 
 function delete_product_panier($id_produit){ 
-    if(creation_panier()){
+    if($this->creation_panier()){
         //création de tableau temporaire
         $i=0;
         $tmp =array();
@@ -427,7 +416,6 @@ function compter_produit(){
 function calcul_montant_panier(){
 
     $total = 0;
-    $i=0;
     $nb_produit=$_SESSION["user"]->compter_produit();
     for($i=0; $i<$nb_produit; $i++){
         $total+= intval($_SESSION['panier']['quantite'][$i])*intval($_SESSION['panier']['prix'][$i]);
@@ -438,8 +426,9 @@ function calcul_montant_panier(){
 
 function delete_panier(){
     if(isset($_SESSION['panier'])){
-
         unset($_SESSION['panier']);
+        //header('location:index.php');
+        
     }
 }
 

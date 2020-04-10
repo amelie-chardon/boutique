@@ -44,7 +44,7 @@ if(!isset($_SESSION['perm'])){
     <section class="panneau">
     <h1>Administration</h1>
 
-        <section class="bloc"> 
+        <div class="gestion_produit"> 
             <article>
             <h2>Ajout de produit</h2>
                 <form action="admin.php" method="POST">
@@ -69,13 +69,12 @@ if(!isset($_SESSION['perm'])){
 
                     <label>Catégorie(s) : </label>
                     <select name="categorie" required>
-
+                       
                        <?php
-                       foreach($result as list($id_cat,$nom)) {
-                        //On attribue $id_cat à value pour récupérer directement l'id de chaque cat
+                       foreach($result as list($id,$nom)) {
                         ?>
 
-                        <option value="<?php echo $id_cat ?>"><?php echo $nom ?></option>
+                        <option value="<?php echo $nom ?>"><?php echo $nom ?></option>
 
                         <?php
                         
@@ -99,13 +98,12 @@ if(!isset($_SESSION['perm'])){
 
                     <label>Sous-Catégorie(s) : </label>
                     <select name="sous_categorie" required>
-
+                       
                     <?php
-                       foreach($result as list($id_sous_cat,$nom)) {
-                        //On attribue $id_sous_cat à value pour récupérer directement l'id de chaque sous_cat
+                       foreach($result as list($id,$nom)) {
                         ?>
-                        
-                        <option value="<?php echo $id_sous_cat ?>"><?php echo $nom ?></option>
+
+                        <option value="<?php echo $nom ?>"><?php echo $nom ?></option>
 
                         <?php
                         
@@ -135,17 +133,21 @@ if(!isset($_SESSION['perm'])){
     if($nom != NULL && $description  != NULL && $stock != NULL &&
      $prix != NULL && $categorie != NULL && $sous_categorie != NULL)
     {
-                    $_SESSION["bdd"]->connect();
+         
+                    $connect = mysqli_connect("localhost", "root", "", "boutique");
+                    $requete = "INSERT INTO `produits` (`nom`, `description`, `prix`, `stock`, `categorie`, `sous_cat`)
+                                VALUES ('$nom', '$description', '$prix', '$stock','$categorie','$sous_categorie')" AND
+                                //"INSERT INTO `categories_produits` (`id_produits`)
+                               // VALUES ('$categorie')";
+
+                            //Amélie au secours le sql va me tuer :D 
+
+
+                               
+                    $query = mysqli_query($connect,$requete);
                     
-                    $requete_produits=$_SESSION["bdd"]->execute("INSERT INTO produits (nom, description, prix, stock) VALUES ('$nom', '$description', '$prix', '$stock')");
-                    $id_produits = $_SESSION["bdd"]->execute("SELECT LAST_INSERT_ID() FROM produits");
-                    $id_produits=$id_produits[0][0];
-                    $requete_categorie = $_SESSION["bdd"]->execute("INSERT INTO categories_produits (id_produits,id_categories) VALUES ('$id_produits','$categorie')");
-                    $requete_sous_categorie = $_SESSION["bdd"]->execute("INSERT INTO sous_categories_produits (id_produits,id_sous_categories) VALUES ('$id_produits','$sous_categorie')");
-                             
-                   
-                   echo "<p>Article bien ajouté !</p>";
-                   //header('Location:index.php');
+                   echo "Article bien ajouté !";
+                   header('Location:index.php');
                     }
              
      else
@@ -160,7 +162,6 @@ if(!isset($_SESSION['perm'])){
 ?>
                 </form>
             </article>
-            </section>
 
             <article>
 
@@ -194,7 +195,7 @@ if(!isset($_SESSION['perm'])){
                                 <td><img class="produit_img" src="<?php echo $image; ?>"/></td>
                                 <td><?php echo $nom; ?></td> 
                                 <td><?php echo $description; ?></td>
-                                <td><?php echo $prix; ?></td>
+                                <td><?php echo $prix; ?> €</td>
                                 <td><?php echo $stock; ?></td>
                                 <td><?php foreach ($categories as $categorie){ echo $categorie[1];?></br><?php } ?></td>
                                 <td><?php foreach ($sous_categories as $sous_categorie){ echo $sous_categorie[1];?></br><?php } ?></td>

@@ -37,16 +37,13 @@ if(!isset($_SESSION['perm'])){
 </head>
 
     <body>
+    <?php require 'include/header.php'?>
+
         <main>
 
-            <?php require 'include/header.php'?>
+                <section class="panneau">
+                    <h1>Administration</h1>
 
-            
-                <h1>Administration</h1>
-
-                    <section class="panneau">
-                      <div class="gestion_produit"> 
-                
                         
                         <?php 
                         if ($_GET['id']==true){
@@ -104,12 +101,15 @@ if(!isset($_SESSION['perm'])){
 
 </article>
 
+<button><a href="admin.php">Retour</a></button>
+
+
                     </section>
 
-                <?php require 'include/footer.php'?>
 
         </main>
 
+        <?php require 'include/footer.php'?>
 
     </body>
 

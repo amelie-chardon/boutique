@@ -51,15 +51,16 @@ if(!isset($_SESSION['user'])){
                         <article class="fiche_produit">
                         <h1><?php echo $data['nom']?></h1>
                             <img id="produit_img" src="<?php echo $data['image']?>" />
-                            <h2><?php echo $data['description']?></h2>
+                            <p><?php echo $data['description']?></p>
+                            <p>Prix à l'unité : <?php echo $data['prix']?>€</p>
                             <p>Stock disponible : <?php echo $data['stock']?> </p>
-                            <h2><?php echo $data['prix']?>€</h2>
                             
                             
                         <?php
                             if($data['stock']!=0){
                                 ?>
                                 <form method="POST">
+                                    <label>Quantité :</label>
                                     <input type="number" min="1" max="<?php echo $data['stock']; ?>" step="1" name="q">
                                     <input type="submit" name="send_qte">
                                 </form>
