@@ -1,0 +1,538 @@
+
+/*GENERAL*/
+html
+{
+    margin:0;
+    padding: 0;
+    width: 100%;
+    font-family: 'Pathway Gothic One', sans-serif;
+}
+
+body
+{
+    margin:0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+    }
+
+main
+{
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    flex-direction: column;
+    min-height: 80vh;
+    width:90vw;
+    margin:10px;
+}
+
+h1
+{
+    display: flex;
+    font-size: 40px;
+    justify-content: center;
+    text-transform: uppercase;
+}
+
+h2
+{
+    text-transform: uppercase;
+}
+
+a{
+    color:black;
+    text-decoration: none;
+}
+
+form
+{
+    text-align: center;
+    margin:0;
+}
+
+p
+{
+    font-size:1.2em;
+}
+
+button, input
+{
+    margin:5px;
+}
+
+article, article div
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+    padding:5px;
+
+}
+
+/*HEADER*/
+
+header
+{
+    display: flex;
+    width:100%;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: rgb(235, 157, 157);
+}
+
+header nav
+{
+    display: flex;
+    height:8vh;
+    align-items: center;
+}
+
+header #menu2
+{
+    background-color: white;
+    width:100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    align-content: center;
+}
+
+#search
+{
+    display: flex;
+}
+
+#search form
+{
+    display: flex;
+}
+
+nav ul li{
+    float: left;
+    text-align: center;
+    position: relative;
+}
+
+nav ul::after{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+nav a{
+    display: block;
+    text-decoration: none;
+    color: black;
+    border-bottom: 2px solid transparent;
+    padding: 10px 0px;
+}
+
+.sous{
+    display: none;
+    background-color: white;
+    position: absolute;
+    width: 100%;
+    z-index: 1000;
+}
+
+nav > ul li:hover .sous{
+    display: block;
+}
+
+.sous li{
+    float: none;
+    width: 100%;
+    text-align: left;
+}
+
+.sous a{
+    padding: 10px;
+    border-bottom: none;
+}
+
+.sous a:hover{
+    border-bottom: none;
+}
+
+.deroulant > a::after{
+    content:" ▼";
+    font-size: 12px;
+}
+
+header ul
+{
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    padding-inline-start: 0;
+}
+
+header li
+{
+    padding: 0 15px;
+}
+
+header li a
+{
+    font-size: 25px;
+    text-decoration: none;
+}
+
+header li a:hover
+{
+    color: peachpuff;
+}
+
+#banner
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#logo-top{
+    max-width:150px;
+    max-height:150px;
+    margin: auto;
+}
+
+
+/*FOOTER*/
+
+footer
+{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: rgb(235, 157, 157);
+    color:black;
+}
+
+footer nav
+{
+    display: flex;
+    height:15vh;
+    align-items: center;
+}
+
+footer ul
+{
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+    padding-inline-start: 0;
+}
+
+footer li
+{
+    padding: 0 15px;
+}
+
+footer li a
+{
+    font-size: 25px;
+    color:black;
+    text-decoration: none;
+}
+
+footer li a:hover
+{
+    color: peachpuff;
+}
+
+/*INDEX*/
+
+
+.panneau-jaune
+{
+    margin:15px;
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+    min-height: 65vh;
+    background-color: rgb(248, 230, 186) ;
+    margin-bottom:5vh;
+}
+
+.panneau-rose
+{
+    margin:15px;
+    display:flex;
+    flex-direction:column ;
+    justify-content: flex-start;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+    min-height: 65vh;
+    background-color: rgb(235, 157, 157) ;
+    margin-bottom:5vh;
+}
+
+.section_wrap
+{
+    display: flex;
+    flex-wrap: wrap;
+    width: 80vw;
+    flex-direction:row;
+    justify-content: space-evenly;
+    align-content: space-between;
+}
+
+.bloc_produit
+{
+    display:flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+    max-width:25vw;
+    margin:10px;
+    padding:5px;
+}
+
+.produit_img
+{
+   width: 200px;
+   height: 200px;
+   margin:15px;
+}
+
+.produit_img:hover
+{
+    transform: scale(1.2);
+}
+
+/*INSCRIPTION/CONNEXION*/
+
+.formulaire
+{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    max-width:25vw;
+    margin: auto;
+    padding:15px;
+}
+
+.formulaire label
+{
+    display: flex;
+    flex-direction:column;
+    align-items:center;
+    align-content:center;
+    justify-items:center;
+    max-width: 20vw;
+    font-size: 15px;
+    text-shadow: 4px 4px 12px rgba(253, 255, 147, 0.795);
+}
+
+.formulaire input
+{
+    display: flex;
+    flex-direction:column;
+    align-items:center;
+    align-content:center;
+    justify-items:center;
+    font-size: 15px;
+    max-width: 20vw;
+
+    color: rgb(22, 22, 22);
+    text-shadow: 4px 4px 12px rgba(253, 255, 147, 0.795);
+}
+
+
+/*PROFIL / ADMIN */
+
+.panneau
+{
+    margin:15px;
+    display:flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+    min-height: 45vh;
+    background-color: rgb(248, 230, 186) ;
+}
+
+.bloc
+{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+    min-width: 30vw;
+    max-width:60vw;
+    margin:20px;
+    padding:15px;
+}
+
+/*TABLEAUX*/
+
+
+table {
+    border-collapse: collapse;
+    vertical-align: center;
+    margin:15px;
+}
+
+th
+{
+    font-size: x-large;
+    padding:10px;
+}
+
+td {
+     padding: 5px;
+    text-align: center;
+}
+
+ .actions th:last-child, .actions td:last-child {
+    border: none;
+  }
+
+  .actions form
+  {
+      margin:auto;
+  }
+
+  .actions tr:last-child
+  {
+    border: none;
+  }
+
+  .prix_tot
+  {
+      font-weight: bold;
+      font-size: x-large;
+  }
+
+  /*AVIS*/
+
+.note_echelle 
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin:5px;
+}
+
+.note_echelle input[type="radio"]
+{
+    margin-right:15px;
+}
+
+input[type="textarea"]
+{
+    height:100px;
+    width: max-content;
+}
+
+  /*PRODUIT*/
+
+  #produit_img
+  {
+     width: 250px;
+     height: 250px;
+  }
+
+/*CONTACT*/
+
+.photo_profil
+{
+    max-height: 250px;
+}
+
+.logo
+{
+    width: 25px;
+}
+
+/*PRESENTATION*/
+
+.bloc_texte
+{
+    display:flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+    max-width:25vw;
+    margin:10px;
+    padding:5px;
+}
+
+/*VOIR COMMANDE*/
+.produit_img_table
+{
+    width: 100px;
+    height: 100px;
+    margin:5px;
+}
+
+.bloc_table
+{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+    margin:10px;
+}
+
+/*PAIEMENT*/
+.paiement
+{
+    background-color:white;
+    color:black;
+    align-items:left;
+    text-align: left;
+    margin:10px;
+}
+
+.paiement p
+{
+    width: 30vw;
+}
+
+/*PANIER*/
+
+input[type="number"]
+{
+    width: 40px;
+    text-align: center;
+    align-content: center;
+}
