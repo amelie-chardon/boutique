@@ -345,24 +345,35 @@ function add_product_panier($id_produit,$nom,$quantite,$prix_produit){
 }
 
 function modify_quantity_product($id_produit,$quantite){
-    if($this->creation_panier()){
+    if($this->creation_panier()==true){
         //Si la valeur est un entier
         if(is_int($quantite))
         {
-            //si la quantité d'un article dans le panier est sup à 0 
-            if($quantite>0){
-                //recherche la position du produit dans le panier
-                $position_produit=array_search($id_produit,$_SESSION['panier']['id_produits']);
-                //si il le trouve la position
-                if($position_produit!==false){
-                    $_SESSION['panier']['quantite'][$position_produit]=strval(intval($quantite));
-                    header('location:panier.php');
+            //Si la quantite choisie est disponible (en stock)
+            $stock=$this->stock($id_produit);
+            if($quantite <= $stock)
+            {
+                //si la quantité d'un article dans le panier est sup à 0 
+                if($quantite>0)
+                {
+                    //recherche la position du produit dans le panier
+                    $position_produit=array_search($id_produit,$_SESSION['panier']['id_produits']);
+                    //si il le trouve la position
+                    if($position_produit!==false){
+                        $_SESSION['panier']['quantite'][$position_produit]=strval(intval($quantite));
+                        header('location:panier.php');
+                    }
+                }
+                //quantité d'article inferieur à 0 d'un article
+                else
+                {
+                    $this->delete_product_panier($id_produit);
+                   header('location:panier.php');
                 }
             }
-            //quantité d'article inferieur à 0 d'un article
-            else{
-            $this->delete_product_panier($id_produit);
-            header('location:panier.php');
+            else 
+            {
+                echo "stock indisponible";
             }
         }
         else{

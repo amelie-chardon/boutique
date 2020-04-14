@@ -37,7 +37,7 @@ if(!isset($_SESSION['user'])){
 <h1>Mon panier</h1>
 
 <?php
-        $_SESSION["user"]->creation_panier();
+    $_SESSION["user"]->creation_panier();
 
         if(isset($_GET['id']))
         {
@@ -85,14 +85,14 @@ else{
                         <?php $pn_qt=$_SESSION['panier']['quantite'][$i];
                          $pn_id_pr=$_SESSION['panier']['id_produits'][$i];
                        ?>
-                        <td><input id="chiffre" type="number" step="1" name="qt" value="<?php echo $pn_qt;?>"/>
+                        <td><input id="chiffre" type="number" min="1" max="<?php echo $_SESSION["bdd"]->stock($pn_id_pr); ?>"step="1" name="qt" value="<?php echo $pn_qt;?>"/>
                         <input type="submit" name="qt_<?php echo $pn_id_pr?>"/></td>
                         <?php
                          $pn_qt=$_SESSION['panier']['quantite'][$i];
                          $pn_id_pr=$_SESSION['panier']['id_produits'][$i];
                        
                         if(isset($_GET["qt_"."$pn_id_pr"])){
-                            $n_qt=$_GET["qt"];
+                            $n_qt=intval($_GET["qt"]);
 
                             $id_produit=$_SESSION['panier']['id_produits'];
                             $_SESSION["user"]->modify_quantity_product($pn_id_pr,$n_qt);
@@ -120,6 +120,7 @@ else{
 <?php
 if(isset($_POST["delete_panier"])){
     $_SESSION["user"]->delete_panier();
+    header("location:panier.php");
 }
 
 ?>

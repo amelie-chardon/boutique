@@ -75,6 +75,15 @@ public function connect()
         }
     }
 
+    
+    public function stock($id_produits)
+    {
+        $this->connect();
+        $result=$this->execute("SELECT stock FROM produits WHERE id=$id_produits");
+        $stock=$result[0][0];
+        return $stock;
+    }
+
 }
 
 ?>
