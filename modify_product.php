@@ -44,7 +44,6 @@ if(!isset($_SESSION['perm'])){
                     <section class="panneau">
                     <h1>Administration</h1>
 
-                      <div class="gestion_produit"> 
                         <article>
                         <h2>Modération de Produit</h2>
                         <?php 
@@ -69,9 +68,9 @@ if(!isset($_SESSION['perm'])){
                         <label>Description :</label>
                         <input type="text" name="description" value="<?php echo  $data['description']; ?>"/><br>
                         <label>Stock : </label>
-                        <input type="text" name="stock" value="<?php echo  $data['stock']; ?>"/><br>
+                        <input type="number" name="stock" value="<?php echo  $data['stock']; ?>"/><br>
                         <label>Prix : </label>
-                        <input type="text" name="prix" value="<?php echo  $data['prix']; ?>"/><br>
+                        <input type="number" name="prix" value="<?php echo  $data['prix']; ?>"/><br>
                 
                         <input type="submit" name="mod_prod"/>
                 </form> 
@@ -79,24 +78,26 @@ if(!isset($_SESSION['perm'])){
                         <?php
                         }
                         else{
-                            echo "Produit non trouvé";
+                            echo "<p>Produit non trouvé</p>";
                         }?>
 
 
             <?php if(isset($_POST['mod_prod']))
             {
-        
+                $nom=$_POST['nom'];
+                $description=$_POST['description'];
+                $prix=$_POST['prix'];
+                $stock=$_POST['stock'];
 
-            $id=$_GET['id'];
-            $connexion = mysqli_connect('Localhost', 'root', '', 'boutique');
-            $update_produit ="UPDATE `produits` 
-                        SET `nom` = '".$_POST['nom']."', `description` = '".$_POST['description']."', `prix` = '".$_POST['prix']."',
-                        `stock` = '".$_POST['stock']."'
-                        WHERE produits.id= $id";
+                $id=$_GET['id'];
+                $connexion = mysqli_connect('localhost', 'root', '', 'boutique');
+                $update_produit ="UPDATE produits 
+                            SET nom = \"$nom\", description = \"$description\", prix = \"$prix\",
+                            stock =\"$stock\"
+                            WHERE produits.id= $id";
+                $query= mysqli_query($connexion,$update_produit);
 
-            $query= mysqli_query($connexion,$update_produit);
-
-            header ("location:modify_product?id=". $_GET["id"]);
+                header ("location:modify_product?id=". $_GET["id"]);
             }
 ?>
 
@@ -119,14 +120,17 @@ if(!isset($_SESSION['perm'])){
 
             $id=$_GET['id'];
             $cat=$_POST["cat"];
-            //mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+            var_dump($id);
+            var_dump($cat);
+            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
             $connexion = mysqli_connect('Localhost', 'root', '', 'boutique');
-            $update_cat ="UPDATE `categories_produits` SET `id_categories` = $cat WHERE  `categories_produits`.`id_produits` = $id";
-            $query= mysqli_query($connexion,$update_cat);
+            $update_cat ="UPDATE `categories_produits` 
+                          SET `id_categories`=$cat
+                          WHERE  `categories_produits`.`id_produits` = $id";
             var_dump($update_cat);
-            var_dump($query);
+            $query= mysqli_query($connexion,$update_cat);
             
-            echo "yes!";
+            echo "<p>Modification bien effectuée</p>";
             
             }
             
@@ -154,12 +158,11 @@ if(!isset($_SESSION['perm'])){
             $cat=$_POST["sous_categorie"];
             //mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
             $connexion = mysqli_connect('Localhost', 'root', '', 'boutique');
-            $update_cat ="UPDATE `sous_categories_produits` SET `id_sous_categories` = $cat WHERE  `sous_categories_produits`.`id_produits` = $id";
-            $query= mysqli_query($connexion,$update_cat);
-            var_dump($update_cat);
-            var_dump($query);
-            
-            echo "yes!";
+            $update_sous_cat ="UPDATE `sous_categories_produits` 
+                               SET `id_sous_categories` = $cat 
+                               WHERE  `sous_categories_produits`.`id_produits` = $id";
+            $query= mysqli_query($connexion,$update_sous_cat);
+            echo "<p>Modification bien effectuée</p>";
             
             }
             
@@ -200,16 +203,16 @@ if(!isset($_SESSION['perm'])){
                              $update_pp ="UPDATE produits SET image = '$chemin' WHERE id = '$id'";
                              $query= mysqli_query($connexion,$update_pp);
                              
-                             echo "Image produit bien mis à jour !";
+                             echo "<p>Image produit bien mise à jour !</p>";
 
                           } else {
-                             echo "Erreur durant l'importation de votre photo de profil";
+                             echo "<p>Erreur durant l'importation de votre photo de profil.</p>";
                           }
                        } else {
-                          echo "Votre photo de profil doit être au format jpg";
+                          echo "<p>Votre photo de profil doit être au format jpg.</p>";
                        }
                     } else {
-                       echo "Votre photo de profil ne doit pas dépasser 3Mo";
+                       echo "<p>Votre photo de profil ne doit pas dépasser 3Mo.</p>";
                     }
                 }
                  
@@ -218,6 +221,8 @@ if(!isset($_SESSION['perm'])){
 </form> 
                         </article>
                        
+    <button><a href="admin.php">Retour</a></button>
+
 
                     </section>
 

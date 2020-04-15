@@ -51,24 +51,37 @@ if(!isset($_SESSION['user'])){
                         <article class="fiche_produit">
                         <h1><?php echo $data['nom']?></h1>
                             <img id="produit_img" src="<?php echo $data['image']?>" />
-                            <h2><?php echo $data['description']?></h2>
+                            <p><?php echo $data['description']?></p>
+                            <p>Prix à l'unité : <?php echo $data['prix']?>€</p>
                             <p>Stock disponible : <?php echo $data['stock']?> </p>
-                            <h2><?php echo $data['prix']?>€</h2>
                             
                             
                         <?php
                             if($data['stock']!=0){
                                 ?>
-                               <button> <a href="panier.php?action-ajout&amp;id=<?php echo $data['id'];?>&amp;l=<?php echo $data['nom'];?>&amp;q=<?php echo $data['stock'];?>&amp;p=<?php echo $data['prix'];?>"> Ajouter au panier (+1)</a></button>
-                            <?php
+                                <form method="POST">
+                                    <label>Quantité :</label>
+                                    <input type="number" min="1" max="<?php echo $data['stock']; ?>" step="1" name="q">
+                                    <input type="submit" name="send_qte">
+                                </form>
+                            <?php   
                             }
                             else{
                                 ?>
-                                <p>En cours de réapro</p>
+                                <p>En cours de réapprovisionnement</p>
                             <?php
                             }
+                            
+                            if(isset($_POST["send_qte"]))
+                            {
+                                $quantite=$_POST["q"];
+                                $nom=$data["nom"];
+                                $id=strval($data["id"]);
+                                $stock=$data["stock"];
+                                $prix=$data["prix"];
+                                header("location:panier.php?action-ajout&id=$id&l=$nom&s=$stock&q=$quantite&p=$prix");
+                            }
                             ?>
-                       
                         </article>
                     </section>
 
@@ -77,6 +90,8 @@ if(!isset($_SESSION['user'])){
                         <article class="zone_avis">
                             <div class="avis">
                             <h2>Les derniers avis</h2>
+                            <article>
+                                <div class="avis&note">
                             <?php 
                                    $id= $_GET['id_produits'];
                                    $connect = mysqli_connect('localhost', 'root', '','boutique');
@@ -86,27 +101,18 @@ if(!isset($_SESSION['user'])){
                                    foreach($data as list($commentaire,$note))
                                    {
                                                ?>
-                                               <article>
-                                                   
-                                                       <div class="avis&note">
-                                                           
-                                                           <p><?php echo $note; ?></p></br>
-                                                           <p><?php echo $commentaire; ?></p>
-                                                           
-                                                       </div>
-                                               </article>
-                                               <?php
-                   
+                                    <p><?php echo $note; ?>/5 : <?php echo $commentaire; ?></p>
+                                <?php
                                    }
                                    
                                  ?>
+                                </div>
+                            </article>
                             <?php 
-                            
-
                         }
                         else
                         {
-                            echo 'produit pas trouver';
+                            echo 'Produit pas trouvé';
                         }
                             ?>
                            

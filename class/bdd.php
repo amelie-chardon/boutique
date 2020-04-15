@@ -5,7 +5,6 @@ class bdd{
     protected $connexion = "";
     private $query="";
     private $result=[];
-    private $pouik="";
 
 
 public function connect()
@@ -30,26 +29,6 @@ public function connect()
         {
             $this->query=$query;
             $execute=mysqli_query($this->connexion, $query);
-
-            // Si le résultat est un booléen 
-            if(is_bool($execute))
-            {
-                $this->result=$execute;
-            }
-            // Si le résultat est un tableau
-            else
-            {
-                $this->result=mysqli_fetch_all($execute);
-            }
-
-            return $this->result;
-        }
-    }
-    public function pouik($pouik)
-    { 
-        {
-            $this->query=$pouik;
-            $execute=mysqli_query($this->connexion, $pouik);
 
             // Si le résultat est un booléen 
             if(is_bool($execute))
@@ -94,6 +73,15 @@ public function connect()
             </article>
         <?php
         }
+    }
+
+    
+    public function stock($id_produits)
+    {
+        $this->connect();
+        $result=$this->execute("SELECT stock FROM produits WHERE id=$id_produits");
+        $stock=$result[0][0];
+        return $stock;
     }
 
 }

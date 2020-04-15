@@ -33,6 +33,7 @@ if(!isset($_SESSION['user'])){
 
 <section class="panneau-jaune">
     <h2>Le résultat de ta recherche</h2>
+    <section class="section_wrap">
 
     <?php 
             if(isset($_GET['search'])){
@@ -51,47 +52,21 @@ if(!isset($_SESSION['user'])){
             RIGHT JOIN sous_categories ON sous_categories_produits.id_sous_categories = sous_categories.id
             WHERE
                 CONCAT(
-                    produits.description,
+                    produits.nom,
                     produits.description,
                     categories.nom,
                     sous_categories.nom
                 ) LIKE '%$q%'
+            GROUP BY produits.id
             ORDER BY
                 produits.id
             DESC");
-            /*
-                    $connect = mysqli_connect('localhost','root','','boutique');
-                    $q=$_GET['search'];
-                    $sql = "SELECT
-                    produits.description,
-                    produits.description,
-                    categories.nom,
-                    sous_categories.nom
-                FROM
-                    produits
-                RIGHT JOIN categories_produits ON produits.id = categories_produits.id_produits
-                RIGHT JOIN categories ON categories_produits.id_categories = categories.id
-                RIGHT JOIN sous_categories_produits ON produits.id = sous_categories_produits.id_produits
-                RIGHT JOIN sous_categories ON sous_categories_produits.id_sous_categories = sous_categories.id
-                WHERE
-                    CONCAT(
-                        produits.description,
-                        produits.description,
-                        categories.nom,
-                        sous_categories.nom
-                    ) LIKE '%$q%'
-                ORDER BY
-                    produits.id
-                DESC";
-
-                    $req = mysqli_query($connect,$sql) or die( mysqli_connect_error());
-                     var_dump($req);
-                */
+            
                 foreach($result as list($id,$nom,$description,$image))
                 {
                             ?>
-                            <article>
-                                <img id="produit_img" src="<?php echo $image; ?>" />
+                            <article class="bloc_produit">
+                                <img class="produit_img" src="<?php echo $image; ?>" />
                                     <div>
                                         <h2><?php echo $nom; ?></h2>
                                         <p><?php echo $description; ?></p>
@@ -99,15 +74,13 @@ if(!isset($_SESSION['user'])){
                                     </div>
                             </article>
                             <?php
-
                 }
-                    
             }
             else{
                     echo "vide ou pas trouvé";
             }
             ?>
-
+    </section>
 </section>
 
 

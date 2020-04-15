@@ -18,7 +18,7 @@ if(!isset($_SESSION['user'])){
 ?>
 
 <head>
-        <title>Présentation</title> 
+        <title>Présentation de l'entreprise</title> 
         <link rel="stylesheet" href="style.css">
         <link href="https://fonts.googleapis.com/css?family=Pathway+Gothic+One&display=swap" rel="stylesheet">
         <meta charset="UTF-8">
@@ -34,7 +34,7 @@ if(!isset($_SESSION['user'])){
 <section class="panneau-jaune">
 
     <h1>Notre entreprise</h1>
-        <p>L'entreprise "Amélie & Sarah" spécialisée dans la vente en ligne de patisseries, est née récemment de la volonté de deux jeunes entrepreuneses.</p>
+        <p>L'entreprise "Amélie & Sarah" spécialisée dans la vente en ligne de pâtisseries, est née récemment de la volonté de deux jeunes entrepreuneses.</p>
     <section class="section_wrap">
         <section class="bloc_texte">
             <h2>2019 : rencontre des deux entrepreuneuses</h2>
@@ -43,7 +43,7 @@ if(!isset($_SESSION['user'])){
         </section>
         <section class="bloc_texte">
             <h2>2020 : création de l'entreprise</h2>
-            <p>Après avoir collaboré sur de nombreux projets, c'est au début de l'année 2020 qu'elles décident de s'associer pour un projet de plus grande envergure : ouvrir un site web pour la vente en ligne de patisseries.</p>
+            <p>Après avoir collaboré sur de nombreux projets, c'est au début de l'année 2020 qu'elles décident de s'associer pour un projet de plus grande envergure : ouvrir un site web pour la vente en ligne de pâtisseries.</p>
         </section>
     </section>
 </section>

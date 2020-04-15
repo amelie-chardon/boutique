@@ -61,7 +61,7 @@ p
     font-size:1.2em;
 }
 
-button[type="submit"]
+button, input
 {
     margin:5px;
 }
@@ -268,7 +268,7 @@ footer li a:hover
     justify-items: center;
     align-content: center;
     align-items: center;
-    min-height: 45vh;
+    min-height: 65vh;
     background-color: rgb(248, 230, 186) ;
     margin-bottom:5vh;
 }
@@ -282,7 +282,7 @@ footer li a:hover
     justify-items: center;
     align-content: center;
     align-items: center;
-    min-height: 45vh;
+    min-height: 65vh;
     background-color: rgb(235, 157, 157) ;
     margin-bottom:5vh;
 }
@@ -526,4 +526,13 @@ input[type="textarea"]
 .paiement p
 {
     width: 30vw;
+}
+
+/*PANIER*/
+
+input[type="number"]
+{
+    width: 40px;
+    text-align: center;
+    align-content: center;
 }

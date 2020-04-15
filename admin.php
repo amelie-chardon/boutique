@@ -49,13 +49,15 @@ if(!isset($_SESSION['perm'])){
             <h2>Ajout de produit</h2>
                 <form action="admin.php" method="POST">
                     <label>Nom : </label>
-                    <input type="text" name="nom"/><br>
+                    <input type="text" name="nom" required/><br>
                     <label>Description :</label>
-                    <input type="text" name="description"/><br>
+                    <input type="text" name="description" required/><br>
                     <label>Stock : </label>
                     <input type="text" name="stock" required/><br>
                     <label>Prix : </label>
                     <input type="text" name="prix" required/><br>
+        
+       
         <?php 
         $_SESSION["bdd"]->connect();
         $i=0;
@@ -74,7 +76,7 @@ if(!isset($_SESSION['perm'])){
                        foreach($result as list($id,$nom)) {
                         ?>
 
-                        <option value="<?php echo $nom ?>"><?php echo $nom ?></option>
+                        <option value="<?php echo $id ?>"><?php echo $nom ?></option>
 
                         <?php
                         
@@ -103,7 +105,7 @@ if(!isset($_SESSION['perm'])){
                        foreach($result as list($id,$nom)) {
                         ?>
 
-                        <option value="<?php echo $nom ?>"><?php echo $nom ?></option>
+                        <option value="<?php echo $id ?>"><?php echo $nom ?></option>
 
                         <?php
                         
@@ -121,6 +123,7 @@ if(!isset($_SESSION['perm'])){
                     
 
                        <?php if(isset($_POST['send_add_produit'])){
+
         
         $nom= $_POST['nom'];
         $description=$_POST['description'];
@@ -134,27 +137,53 @@ if(!isset($_SESSION['perm'])){
      $prix != NULL && $categorie != NULL && $sous_categorie != NULL)
     {
          
-                    $connect = mysqli_connect("localhost", "root", "", "boutique");
-                    $requete = "INSERT INTO `produits` (`nom`, `description`, `prix`, `stock`, `categorie`, `sous_cat`)
-                                VALUES ('$nom', '$description', '$prix', '$stock','$categorie','$sous_categorie')" AND
-                                //"INSERT INTO `categories_produits` (`id_produits`)
-                               // VALUES ('$categorie')";
+                    $mysqli = new mysqli("localhost", "root", "", "boutique");
+                    $sql = $mysqli->prepare( "INSERT INTO `produits` (`nom`, `description`, `prix`, `stock`)
+                                VALUES ('$nom', '$description', '$prix', '$stock')" );
 
-                            //Amélie au secours le sql va me tuer :D 
+                                
+                                if($sql->execute()){
+                                    $id_prod = $sql->insert_id;
+                                    
+                                    $insert_cat = $mysqli->prepare("INSERT INTO `categories_produits` (`id_produits`,`id_categories`)
+                                    VALUES ('$id_prod','$categorie')");
+                                     var_dump($id_prod);
+                                     var_dump($insert_cat);
+                                    
+                                
+                                if($insert_cat->execute()){
+                                    $idscat = $sql->insert_id;
+                                    
+                                    $insert_sous_cat = $mysqli->prepare( "INSERT INTO `sous_categories_produits` (`id_produits`,`id_sous_categories`)
+                                    VALUES ('$idscat','$sous_categorie')");
+                                    var_dump($idscat);
+                                    var_dump($insert_sous_cat);
+                                   
 
-
-                               
-                    $query = mysqli_query($connect,$requete);
+                                    if($insert_sous_cat->execute()){
+                                        echo 'Article ADD :) ';	
+                                    }
+                                   
+                            
+                      
+                        
+                        }else
+                        { 
+                            echo "probleme insert cat".mysqli_error($mysqli);;
+                            }
+                         }
+                            else
+                            {
+                                echo "probleme insert sous cat";
+                            }   
                     
-                   echo "Article bien ajouté !";
-                   header('Location:index.php');
-                    }
+                        }
              
-     else
-     {
-        
-        echo "empty";
-     }
+                    else
+                    {
+                        
+                        echo "Veuillez remplir tout les champs";
+                    }
          
         }
         
@@ -195,7 +224,7 @@ if(!isset($_SESSION['perm'])){
                                 <td><img class="produit_img" src="<?php echo $image; ?>"/></td>
                                 <td><?php echo $nom; ?></td> 
                                 <td><?php echo $description; ?></td>
-                                <td><?php echo $prix; ?></td>
+                                <td><?php echo $prix; ?> €</td>
                                 <td><?php echo $stock; ?></td>
                                 <td><?php foreach ($categories as $categorie){ echo $categorie[1];?></br><?php } ?></td>
                                 <td><?php foreach ($sous_categories as $sous_categorie){ echo $sous_categorie[1];?></br><?php } ?></td>
@@ -236,7 +265,7 @@ if(!isset($_SESSION['perm'])){
                             $query = mysqli_query($connect,$requete);
                             
                         echo "Catégorie bien ajoutée !";
-                        //s'ajoute en deux fois , si ajout header location, bug , car deja use plus haut...//
+                        
                             }
              
                             else
@@ -295,49 +324,6 @@ if(!isset($_SESSION['perm'])){
                            </div>
 
 
-                 <!--   <div class="gestion_sous_cat">
-                        <article>
-
-                        <h2>Création de sous-categories</h2>
-
-                        <form action="admin.php" method="POST">
-                        <label>Nom : </label>
-                        <input type="text" name="nom"/><br>
-                  
-                        <input type="submit" name="add_sous_cat"/>
-                        <?php /*if(isset($_POST['add_sous_cat'])){
-        
-        $nom= $_POST['nom'];
-        
-    if($nom != NULL)
-    {
-         
-                    $connect = mysqli_connect("localhost", "root", "", "boutique");
-                    $requete = "INSERT INTO `sous_categories` (`nom`) 
-                                VALUES ('$nom')"; 
-                                
-                    $query = mysqli_query($connect,$requete);
-                    var_dump($query);
-                    
-                   echo "Sous-Catégorie bien ajoutée !";
-                   //s'ajoute en deux fois , si ajout header location, bug , car deja use plus haut...//
-                    }
-             
-     else
-     {
-        
-        echo "empty";
-     }
-         
-        }
-  */      
-       
-?>
-                 </form>
-
-                        </article>
-                    
- -->  
                     </section>
 
 
