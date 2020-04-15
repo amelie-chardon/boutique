@@ -57,6 +57,8 @@ if(!isset($_SESSION['user'])){
                             
                             
                         <?php
+                        if($_SESSION['user']->isConnected() == true){
+
                             if($data['stock']!=0){
                                 ?>
                                 <form method="POST">
@@ -81,6 +83,7 @@ if(!isset($_SESSION['user'])){
                                 $prix=$data["prix"];
                                 header("location:panier.php?action-ajout&id=$id&l=$nom&s=$stock&q=$quantite&p=$prix");
                             }
+                        }
                             ?>
                         </article>
                     </section>
@@ -114,29 +117,20 @@ if(!isset($_SESSION['user'])){
                         {
                             echo 'Produit pas trouvé';
                         }
-                            ?>
-                           
-                            <h2>Vous souhaitez laisser un avis</h2>
-                            <?php
-                            $id = $_GET['id_produits']
-                            ?>
-                            <button><a href="laisser-avis?id_produits=<?php echo $id; ?>">Poster un commentaire</a></button>
-                            </div>
-                               
-                            <div class="zone_creation_avis">
+                        if($_SESSION['user']->isConnected() == true){
 
+                            ?>
+                                <h2>Vous souhaitez laisser un avis</h2>
+                                <?php
+                                $id = $_GET['id_produits']
+                                ?>
+                                <button><a href="laisser-avis?id_produits=<?php echo $id; ?>">Poster un commentaire</a></button>
+                                <?php
+                            }
+                            ?>
                             </div>
-
                         </article>
                     </section>
-
-                        <aside class="produit_similaire">
-
-
-                        </aside>
-
-                          
-
 
 </section>
 

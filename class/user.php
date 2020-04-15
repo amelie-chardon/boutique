@@ -219,7 +219,8 @@ public function profil($confmdp,$login = "",$mail= "",$mdp = ""){
         $this->connect();
         $fetch=$this->execute("SELECT achats.id_utilisateurs, produits.id,produits.nom, panier.quantite,produits.prix, produits.image, achats.prix FROM panier RIGHT JOIN produits ON panier.id_produits=produits.id RIGHT JOIN achats ON achats.id=panier.id_achats WHERE id_achats=$id_achats");
         //On vérifie que la commande correspond à l'utilisateur connecté
-        if($fetch[0][0]!==$id_achats)
+        $id_utilisateur=$this->getid();
+        if($fetch[0][0]!==$id_utilisateur)
         {
             header("location:index.php");
         }
@@ -251,7 +252,7 @@ public function profil($confmdp,$login = "",$mail= "",$mdp = ""){
             ?>
                     <tr>
                         <td class="prix_tot" colspan="3">Montant total :</td>
-                        <td class="prix_tot"><?php echo $fetch[0][5]; ?>€</td>
+                        <td class="prix_tot"><?php echo $prix_u*$quantite; ?>€</td>
                         <td></td>
                     </tr>
                 </tbody> 

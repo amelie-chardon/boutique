@@ -120,9 +120,13 @@ if(!isset($_SESSION['perm'])){
 
             $id=$_GET['id'];
             $cat=$_POST["cat"];
-            //mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+            
+            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
             $connexion = mysqli_connect('Localhost', 'root', '', 'boutique');
-            $update_cat ="UPDATE `categories_produits` SET `id_categories` = $cat WHERE  `categories_produits`.`id_produits` = $id";
+            $update_cat ="UPDATE `categories_produits` 
+                          SET `id_categories`=$cat
+                          WHERE  `categories_produits`.`id_produits` = $id";
+            
             $query= mysqli_query($connexion,$update_cat);
             
             echo "<p>Modification bien effectuée</p>";
@@ -153,8 +157,10 @@ if(!isset($_SESSION['perm'])){
             $cat=$_POST["sous_categorie"];
             //mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
             $connexion = mysqli_connect('Localhost', 'root', '', 'boutique');
-            $update_cat ="UPDATE `sous_categories_produits` SET `id_sous_categories` = $cat WHERE  `sous_categories_produits`.`id_produits` = $id";
-            $query= mysqli_query($connexion,$update_cat);
+            $update_sous_cat ="UPDATE `sous_categories_produits` 
+                               SET `id_sous_categories` = $cat 
+                               WHERE  `sous_categories_produits`.`id_produits` = $id";
+            $query= mysqli_query($connexion,$update_sous_cat);
             echo "<p>Modification bien effectuée</p>";
             
             }

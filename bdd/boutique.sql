@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  ven. 10 avr. 2020 à 16:42
+-- Généré le :  mer. 15 avr. 2020 à 08:41
 -- Version du serveur :  5.7.26
 -- Version de PHP :  7.2.18
 
@@ -73,7 +73,7 @@ INSERT INTO `avis` (`id`, `id_produits`, `id_utilisateurs`, `note`, `commentaire
 (1, 17, 1, 2, 'Je ne recommande pas'),
 (2, 20, 2, 5, 'RAS'),
 (3, 18, 2, 4, 'Super produit !'),
-(4, 21, 3, 4, 'Très bon produit'),
+(4, 21, 3, 4, 'Bon produit'),
 (5, 16, 3, 5, 'Super produit, je recommande vivement'),
 (6, 19, 1, 5, 'J\'adore ce produit'),
 (7, 22, 1, 4, 'Satisfaite'),
