@@ -147,8 +147,7 @@ if(!isset($_SESSION['perm'])){
                                     
                                     $insert_cat = $mysqli->prepare("INSERT INTO `categories_produits` (`id_produits`,`id_categories`)
                                     VALUES ('$id_prod','$categorie')");
-                                     var_dump($id_prod);
-                                     var_dump($insert_cat);
+                                    
                                     
                                 
                                 if($insert_cat->execute()){
@@ -156,8 +155,7 @@ if(!isset($_SESSION['perm'])){
                                     
                                     $insert_sous_cat = $mysqli->prepare( "INSERT INTO `sous_categories_produits` (`id_produits`,`id_sous_categories`)
                                     VALUES ('$idscat','$sous_categorie')");
-                                    var_dump($idscat);
-                                    var_dump($insert_sous_cat);
+                                    
                                    
 
                                     if($insert_sous_cat->execute()){

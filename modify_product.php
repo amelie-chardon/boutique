@@ -120,14 +120,13 @@ if(!isset($_SESSION['perm'])){
 
             $id=$_GET['id'];
             $cat=$_POST["cat"];
-            var_dump($id);
-            var_dump($cat);
+            
             mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
             $connexion = mysqli_connect('Localhost', 'root', '', 'boutique');
             $update_cat ="UPDATE `categories_produits` 
                           SET `id_categories`=$cat
                           WHERE  `categories_produits`.`id_produits` = $id";
-            var_dump($update_cat);
+            
             $query= mysqli_query($connexion,$update_cat);
             
             echo "<p>Modification bien effectuée</p>";
