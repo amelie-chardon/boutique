@@ -63,6 +63,10 @@ if(!isset($_SESSION['user'])){
         $id_produits=$_SESSION['panier']['id_produits'][$i];
         $quantite=intval($_SESSION['panier']['quantite'][$i]);
         $prix=intval($_SESSION['panier']['prix'][$i]);
+  //Mise à jour du stock
+  $stock=$_SESSION["bdd"]->execute("UPDATE produits SET stock = stock-\"$quantite\" WHERE produits.id = \"$id_produits\"");
+
+
         //On ajoute à la table panier
         $panier=$_SESSION["user"]->execute("INSERT INTO panier (id_produits,id_achats,quantite) VALUES (\"$id_produits\",\"$id_achats\",\"$quantite\")");
         
